@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+  output = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String    @id @default(cuid())
+  email             String    @unique
+  password          String?
+  firstName         String
+  lastName          String
+  profileImage      String?
+  bio               String?
+  emailVerified     Boolean   @default(false)
+  verificationToken String?
+  verificationTokenExpiry DateTime?
+  stravaId          String?
+  stravaAccessToken String?
+  stravaRefreshToken String?
+  stravaTokenExpiresAt DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  activities        Activity[]
+  races             Race[]
+  participations    Participation[]
+  userRaces         UserRace[]
+  chatMessages      ChatMessage[]
+}
+
+model Race {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  distance    Float
+  startDate   DateTime
+  endDate     DateTime
+  imageUrl    String?
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  participations Participation[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  userRaces   UserRace[]
+  checkpoints Checkpoint[]
+  chatMessages ChatMessage[]
+}
+
+model UserRace {
+  id        String   @id @default(cuid())
+  userId    String
+  raceId    String
+  progress  Float    @default(0)
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cheers    Cheer[]
+  race      Race     @relation(fields: [raceId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, raceId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Checkpoint {
+  id          String   @id @default(cuid())
+  raceId      String
+  name        String
+  description String?
+  distance    Float
+  coordinates Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  race        Race     @relation(fields: [raceId], references: [id], onDelete: Cascade)
+}
+
+model Cheer {
+  id         String   @id @default(cuid())
+  message    String
+  audioUrl   String?
+  milestone  Float
+  userRaceId String
+  senderId   String?
+  senderName String?
+  isPublic   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userRace   UserRace @relation(fields: [userRaceId], references: [id], onDelete: Cascade)
+}
+
+model Activity {
+  id          String    @id @default(cuid())
+  stravaId    String    @unique
+  name        String
+  distance    Float
+  movingTime  Int
+  elapsedTime Int
+  startDate   DateTime
+  type        String
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Participation {
+  id          String    @id @default(cuid())
+  userId      String
+  raceId      String
+  user        User      @relation(fields: [userId], references: [id])
+  race        Race      @relation(fields: [raceId], references: [id])
+  status      String    @default("pending")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([userId, raceId])
+}
+
+model ChatMessage {
+  id         String   @id @default(cuid())
+  raceId     String
+  userId     String
+  userName   String
+  userAvatar String?
+  content    String
+  type       String   @default("user")
+  timestamp  DateTime @default(now())
+  race       Race     @relation(fields: [raceId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id])
+}
