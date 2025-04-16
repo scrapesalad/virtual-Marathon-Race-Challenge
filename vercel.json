@@ -1,4 +1,13 @@
 {
+  "version": 2,
+  "buildCommand": "prisma generate && next build",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "NEXTAUTH_URL": "WILL_BE_SET_BY_VERCEL",
+    "PRISMA_GENERATE_DATAPROXY": "true"
+  },
   "rewrites": [
     {
       "source": "/races/:id",
