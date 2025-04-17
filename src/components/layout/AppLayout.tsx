@@ -3,6 +3,9 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { MobileLayout } from '../mobile/MobileLayout';
 import { usePathname } from 'next/navigation';
+import { Toaster } from '@/components/ui/Toaster';
+import { ToastProvider as ToastPrimitiveProvider } from '@/components/ui/Toast';
+import { ToastProvider } from '@/components/ui/use-toast';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -32,9 +35,22 @@ export function AppLayout({ children }: AppLayoutProps) {
                     pathname === '/login' || 
                     pathname === '/sign-up';
 
-  if (isMobile && !isAuthPage) {
-    return <MobileLayout>{children}</MobileLayout>;
-  }
+  const content = (
+    <>
+      {isMobile && !isAuthPage ? (
+        <MobileLayout>{children}</MobileLayout>
+      ) : (
+        <div className="min-h-screen">{children}</div>
+      )}
+      <Toaster />
+    </>
+  );
 
-  return <div className="min-h-screen">{children}</div>;
+  return (
+    <ToastProvider>
+      <ToastPrimitiveProvider>
+        {content}
+      </ToastPrimitiveProvider>
+    </ToastProvider>
+  );
 } 

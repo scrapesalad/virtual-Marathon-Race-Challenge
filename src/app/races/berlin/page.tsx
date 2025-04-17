@@ -1,58 +1,60 @@
-import { MarathonPage } from '@/components/races/MarathonPage';
-
-const berlinMarathon = {
-  id: 'berlin-marathon',
-  name: 'Berlin Marathon',
-  description: 'Experience the fastest marathon course in the world through the historic streets of Berlin. Known for its flat terrain and record-breaking performances, the BMW Berlin Marathon takes you past iconic landmarks like the Brandenburg Gate, Reichstag, and Berlin Cathedral.',
-  location: 'Berlin, Germany',
-  distance: 42.195,
-  elevationGain: 50,
-  difficulty: 'moderate',
-  coordinates: [
-    [13.3755, 52.5163] as [number, number], // Start at Straße des 17. Juni
-    [13.3800, 52.5200] as [number, number], // Victory Column
-    [13.4000, 52.5200] as [number, number], // Tiergarten
-    [13.4000, 52.5000] as [number, number], // Potsdamer Platz
-    [13.4000, 52.4800] as [number, number], // Checkpoint Charlie
-    [13.3800, 52.4800] as [number, number], // Gendarmenmarkt
-    [13.3800, 52.5000] as [number, number], // Brandenburg Gate
-    [13.3755, 52.5163] as [number, number], // Finish at Straße des 17. Juni
-  ],
-  milestones: [
-    {
-      distance: 0,
-      location: 'Straße des 17. Juni',
-      description: 'Start at the iconic boulevard in the heart of Berlin',
-    },
-    {
-      distance: 10,
-      location: 'Victory Column',
-      description: 'Pass the golden statue in the middle of Tiergarten',
-    },
-    {
-      distance: 20,
-      location: 'Potsdamer Platz',
-      description: 'Run through this modern square with its impressive architecture',
-    },
-    {
-      distance: 30,
-      location: 'Checkpoint Charlie',
-      description: 'Pass the famous Cold War crossing point',
-    },
-    {
-      distance: 35,
-      location: 'Gendarmenmarkt',
-      description: 'One of Berlin\'s most beautiful squares with its twin cathedrals',
-    },
-    {
-      distance: 42.195,
-      location: 'Brandenburg Gate',
-      description: 'Finish at Berlin\'s most famous landmark',
-    },
-  ],
-  image: '/images/races/berlin-marathon.jpg',
-};
+import { Suspense } from 'react';
+import { MarathonMap } from '@/components/races/MarathonMap';
+import { berlinMarathonRoute } from '@/data/berlin-marathon-route';
+import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
 
 export default function BerlinMarathonPage() {
-  return <MarathonPage marathon={berlinMarathon} />;
+  // In a real app, we would fetch the user's progress from the API
+  const userProgress = 35; // Example progress
+
+  return (
+    <div className="container mx-auto py-8">
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">{berlinMarathonRoute.name}</h1>
+            <p className="text-gray-500">{berlinMarathonRoute.location}</p>
+          </div>
+          <Badge variant="outline" className="text-lg">
+            {berlinMarathonRoute.distance}km
+          </Badge>
+        </div>
+
+        <Card>
+          <CardContent className="p-6">
+            <p className="text-gray-700">{berlinMarathonRoute.description}</p>
+          </CardContent>
+        </Card>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <h2 className="text-xl font-semibold">Race Details</h2>
+            </CardHeader>
+            <CardContent>
+              <dl className="space-y-4">
+                <div>
+                  <dt className="text-sm text-gray-500">Elevation Gain</dt>
+                  <dd className="text-lg font-medium">{berlinMarathonRoute.elevationGain}m</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-gray-500">Difficulty</dt>
+                  <dd className="text-lg font-medium capitalize">{berlinMarathonRoute.difficulty}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-gray-500">Course Record</dt>
+                  <dd className="text-lg font-medium">{berlinMarathonRoute.courseRecord}</dd>
+                </div>
+              </dl>
+            </CardContent>
+          </Card>
+
+          <Suspense fallback={<div>Loading map...</div>}>
+            <MarathonMap route={berlinMarathonRoute} userProgress={userProgress} />
+          </Suspense>
+        </div>
+      </div>
+    </div>
+  );
 } 

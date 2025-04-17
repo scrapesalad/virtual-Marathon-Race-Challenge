@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { Button } from '../ui/Button';
 import { Card, CardContent } from '../ui/Card';
-import { Marathon } from '@/types';
+import type { MarathonData } from '@/types/race';
 
 interface DifficultyFilterProps {
-  onSelectRace: (race: Marathon) => void;
+  onSelectRace: (race: MarathonData) => void;
 }
 
 const difficultyOptions = [
@@ -16,7 +16,7 @@ const difficultyOptions = [
   { value: 'extreme', label: 'Extreme', description: 'For elite runners only' },
 ];
 
-const marathonOptions: Record<string, Marathon[]> = {
+const marathonOptions: Record<string, MarathonData[]> = {
   easy: [
     {
       id: 'chicago-marathon',
@@ -26,10 +26,11 @@ const marathonOptions: Record<string, Marathon[]> = {
       elevationGain: 100,
       difficulty: 'easy',
       location: 'Chicago, IL',
-      startDate: '2024-10-13',
-      endDate: '2024-10-13',
-      route: [],
-      markers: [],
+      coordinates: [],
+      milestones: [],
+      image: '/images/races/chicago.jpg',
+      startDate: new Date('2024-10-13').toISOString(),
+      endDate: new Date('2024-10-13').toISOString()
     },
     {
       id: 'berlin-marathon',
@@ -39,10 +40,11 @@ const marathonOptions: Record<string, Marathon[]> = {
       elevationGain: 150,
       difficulty: 'easy',
       location: 'Berlin, Germany',
-      startDate: '2024-09-29',
-      endDate: '2024-09-29',
-      route: [],
-      markers: [],
+      coordinates: [],
+      milestones: [],
+      image: '/images/races/berlin.jpg',
+      startDate: new Date('2024-09-29').toISOString(),
+      endDate: new Date('2024-09-29').toISOString()
     },
   ],
   moderate: [
@@ -54,10 +56,11 @@ const marathonOptions: Record<string, Marathon[]> = {
       elevationGain: 500,
       difficulty: 'moderate',
       location: 'Boston, MA',
-      startDate: '2024-04-15',
-      endDate: '2024-04-15',
-      route: [],
-      markers: [],
+      coordinates: [],
+      milestones: [],
+      image: '/images/races/boston.jpg',
+      startDate: new Date('2024-04-15').toISOString(),
+      endDate: new Date('2024-04-15').toISOString()
     },
     {
       id: 'new-york-marathon',
@@ -67,10 +70,11 @@ const marathonOptions: Record<string, Marathon[]> = {
       elevationGain: 400,
       difficulty: 'moderate',
       location: 'New York, NY',
-      startDate: '2024-11-03',
-      endDate: '2024-11-03',
-      route: [],
-      markers: [],
+      coordinates: [],
+      milestones: [],
+      image: '/images/races/nyc.jpg',
+      startDate: new Date('2024-11-03').toISOString(),
+      endDate: new Date('2024-11-03').toISOString()
     },
   ],
   hard: [
@@ -82,10 +86,11 @@ const marathonOptions: Record<string, Marathon[]> = {
       elevationGain: 2000,
       difficulty: 'hard',
       location: 'Durban, South Africa',
-      startDate: '2024-06-09',
-      endDate: '2024-06-09',
-      route: [],
-      markers: [],
+      coordinates: [],
+      milestones: [],
+      image: '/images/races/comrades.jpg',
+      startDate: new Date('2024-06-09').toISOString(),
+      endDate: new Date('2024-06-09').toISOString()
     },
     {
       id: 'western-states',
@@ -95,10 +100,11 @@ const marathonOptions: Record<string, Marathon[]> = {
       elevationGain: 5500,
       difficulty: 'hard',
       location: 'Squaw Valley, CA',
-      startDate: '2024-06-29',
-      endDate: '2024-06-30',
-      route: [],
-      markers: [],
+      coordinates: [],
+      milestones: [],
+      image: '/images/races/western-states.jpg',
+      startDate: new Date('2024-06-29').toISOString(),
+      endDate: new Date('2024-06-30').toISOString()
     },
   ],
   extreme: [
@@ -110,10 +116,11 @@ const marathonOptions: Record<string, Marathon[]> = {
       elevationGain: 60000,
       difficulty: 'extreme',
       location: 'Frozen Head State Park, TN',
-      startDate: '2024-03-01',
-      endDate: '2024-03-02',
-      route: [],
-      markers: [],
+      coordinates: [],
+      milestones: [],
+      image: '/images/races/barkley.jpg',
+      startDate: new Date('2024-03-01').toISOString(),
+      endDate: new Date('2024-03-02').toISOString()
     },
     {
       id: 'spartathlon',
@@ -123,10 +130,11 @@ const marathonOptions: Record<string, Marathon[]> = {
       elevationGain: 3000,
       difficulty: 'extreme',
       location: 'Athens to Sparta, Greece',
-      startDate: '2024-09-27',
-      endDate: '2024-09-28',
-      route: [],
-      markers: [],
+      coordinates: [],
+      milestones: [],
+      image: '/images/races/spartathlon.jpg',
+      startDate: new Date('2024-09-27').toISOString(),
+      endDate: new Date('2024-09-28').toISOString()
     },
   ],
 };
@@ -151,35 +159,33 @@ export function DifficultyFilter({ onSelectRace }: DifficultyFilterProps) {
       </div>
 
       {selectedDifficulty && (
-        <Card>
-          <CardContent className="pt-6">
-            <h3 className="text-xl font-semibold mb-4">
-              {difficultyOptions.find(opt => opt.value === selectedDifficulty)?.label} Marathons
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {marathonOptions[selectedDifficulty].map((race) => (
-                <Card key={race.id} className="hover:shadow-lg transition-shadow">
-                  <CardContent className="pt-6">
-                    <h4 className="text-lg font-semibold">{race.name}</h4>
-                    <p className="text-sm text-gray-500 mt-1">{race.description}</p>
-                    <div className="mt-4 space-y-1 text-sm">
-                      <p>📍 {race.location}</p>
-                      <p>📅 {new Date(race.startDate).toLocaleDateString()}</p>
-                      <p>🏃‍♂️ {race.distance}km</p>
-                      <p>⛰️ {race.elevationGain}m elevation gain</p>
-                    </div>
-                    <Button
-                      className="mt-4 w-full"
-                      onClick={() => onSelectRace(race)}
-                    >
-                      Select Race
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <div className="mt-8">
+          <h3 className="text-xl font-semibold mb-4">
+            {difficultyOptions.find(opt => opt.value === selectedDifficulty)?.label} Marathons
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {marathonOptions[selectedDifficulty].map((race) => (
+              <Card key={race.id} className="hover:shadow-lg transition-shadow">
+                <CardContent className="p-6">
+                  <h4 className="text-lg font-semibold">{race.name}</h4>
+                  <p className="text-sm text-gray-500 mt-1">{race.description}</p>
+                  <div className="mt-4 space-y-2 text-sm">
+                    <p>📍 {race.location}</p>
+                    <p>📅 {new Date(race.startDate).toLocaleDateString()}</p>
+                    <p>🏃‍♂️ {race.distance}km</p>
+                    <p>⛰️ {race.elevationGain}m elevation gain</p>
+                  </div>
+                  <Button
+                    className="mt-4 w-full"
+                    onClick={() => onSelectRace(race)}
+                  >
+                    Select Race
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

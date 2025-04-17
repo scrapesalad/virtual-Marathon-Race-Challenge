@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { DynamicMap } from '@/components/DynamicMap';
 import { MapRoute } from '@/types/route';
+import { MarathonRecord } from '@/components/races/MarathonRecord';
 import Image from 'next/image';
 
 interface RaceDetailsProps {
@@ -21,6 +22,9 @@ interface RaceDetailsProps {
     difficulty: string;
     startDate: string;
     endDate: string;
+    courseRecord?: string;
+    recordHolder?: string;
+    recordYear?: number;
     route: {
       coordinates: [number, number][];
     };
@@ -112,6 +116,15 @@ export function RaceDetails({ race }: RaceDetailsProps) {
             </CardHeader>
             <CardContent>
               <p className="text-gray-700 mb-4">{race.description}</p>
+              {race.courseRecord && race.recordHolder && race.recordYear && (
+                <div className="mb-4">
+                  <MarathonRecord
+                    courseRecord={race.courseRecord}
+                    recordHolder={race.recordHolder}
+                    recordYear={race.recordYear}
+                  />
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-gray-500">Start Date</p>

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { cn } from '@/lib/utils';
 
 interface Point {
   latitude: number;
@@ -18,9 +19,10 @@ interface MapProps {
     description: string;
     type: 'funny' | 'scary' | 'interesting' | 'warning';
   }[];
+  className?: string;
 }
 
-export function Map({ coordinates, onClick, markers = [] }: MapProps) {
+export function Map({ coordinates, onClick, markers = [], className }: MapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const markersRef = useRef<mapboxgl.Marker[]>([]);
@@ -38,19 +40,19 @@ export function Map({ coordinates, onClick, markers = [] }: MapProps) {
       zoom: 12,
     });
 
+    const currentMap = map.current;
+
     // Add click handler
     if (onClick) {
-      map.current.on('click', (e) => {
+      currentMap.on('click', (e) => {
         onClick([e.lngLat.lat, e.lngLat.lng]);
       });
     }
 
     // Add route line
     if (coordinates.length > 0) {
-      map.current.on('load', () => {
-        if (!map.current) return;
-
-        map.current.addSource('route', {
+      currentMap.on('load', () => {
+        currentMap.addSource('route', {
           type: 'geojson',
           data: {
             type: 'Feature',
@@ -62,7 +64,7 @@ export function Map({ coordinates, onClick, markers = [] }: MapProps) {
           },
         });
 
-        map.current.addLayer({
+        currentMap.addLayer({
           id: 'route',
           type: 'line',
           source: 'route',
@@ -79,16 +81,14 @@ export function Map({ coordinates, onClick, markers = [] }: MapProps) {
     }
 
     return () => {
-      if (map.current) {
-        map.current.remove();
-        map.current = null;
-      }
+      currentMap.remove();
     };
   }, [coordinates, onClick]);
 
   // Update markers
   useEffect(() => {
-    if (!map.current) return;
+    const currentMap = map.current;
+    if (!currentMap) return;
 
     // Remove existing markers
     markersRef.current.forEach(marker => marker.remove());
@@ -122,11 +122,11 @@ export function Map({ coordinates, onClick, markers = [] }: MapProps) {
               <p class="text-sm">${marker.description}</p>
             `)
         )
-        .addTo(map.current);
+        .addTo(currentMap);
 
       markersRef.current.push(mapboxMarker);
     });
   }, [markers]);
 
-  return <div ref={mapContainer} className="w-full h-full rounded-lg" />;
+  return <div ref={mapContainer} className={cn("w-full h-full rounded-lg", className)} />;
 }

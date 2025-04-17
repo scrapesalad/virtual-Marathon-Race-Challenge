@@ -4,12 +4,27 @@ import { Button } from './ui/Button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { getStravaAuthUrl } from '@/lib/strava';
 
 export function Welcome() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [stravaUrl, setStravaUrl] = useState('');
+  const [stravaEnabled, setStravaEnabled] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
+    const clientId = process.env.NEXT_PUBLIC_STRAVA_CLIENT_ID;
+    const redirectUri = process.env.NEXT_PUBLIC_STRAVA_REDIRECT_URI;
+    
+    if (clientId && redirectUri) {
+      try {
+        const url = getStravaAuthUrl();
+        setStravaUrl(url);
+        setStravaEnabled(true);
+      } catch (error) {
+        console.error('Failed to get Strava auth URL:', error);
+      }
+    }
   }, []);
 
   return (
@@ -25,15 +40,56 @@ export function Welcome() {
               <p className="text-xl text-gray-600 dark:text-gray-300">
                 Run iconic routes virtually, track your progress, and compete with runners worldwide.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Link href="/sign-up">
-                  <Button variant="primary" size="lg" fullWidth>
-                    Sign Up
+              <div className="flex flex-col gap-4 pt-4">
+                <Link href="/sign-up" className="w-full">
+                  <Button 
+                    variant="primary" 
+                    size="lg" 
+                    className="w-full bg-orange-500 hover:bg-orange-600 text-lg py-6"
+                  >
+                    Create Free Account
                   </Button>
                 </Link>
-                <Link href="/races">
-                  <Button variant="secondary" size="lg" fullWidth>
-                    View Races
+                {stravaEnabled && (
+                  <>
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t border-gray-300" />
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 text-gray-500">
+                          Or connect with
+                        </span>
+                      </div>
+                    </div>
+                    <a 
+                      href={stravaUrl} 
+                      className="w-full"
+                    >
+                      <Button 
+                        variant="secondary" 
+                        size="lg" 
+                        className="w-full bg-[#FC4C02] hover:bg-[#E34402] text-white border-none flex items-center justify-center gap-2"
+                      >
+                        <Image
+                          src="/images/partners/strava-logo-white.svg"
+                          alt="Strava logo"
+                          width={24}
+                          height={24}
+                          className="w-6 h-6"
+                        />
+                        Connect with Strava
+                      </Button>
+                    </a>
+                  </>
+                )}
+                <Link href="/races" className="w-full">
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="w-full"
+                  >
+                    Browse Races
                   </Button>
                 </Link>
               </div>

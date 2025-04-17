@@ -6,6 +6,9 @@ import { Button } from './ui/Button';
 import { Map } from './Map';
 import { marathonRoutes } from '@/data/marathon-routes';
 import Image from 'next/image';
+import { Label } from './ui/Label';
+import { Input } from './ui/Input';
+import { Textarea } from './ui/Textarea';
 
 interface RaceCreationFormProps {
   onSubmit: (raceData: RaceData) => void;
@@ -24,26 +27,35 @@ interface RaceData {
   isPrivate: boolean;
 }
 
+interface RoutePreview {
+  coordinates: [number, number][];
+  progress: number;
+  imageUrl?: string;
+}
+
 export function RaceCreationForm({ onSubmit, onCancel }: RaceCreationFormProps) {
+  const defaultRoute = marathonRoutes.find(route => route.id === 'nyc') || marathonRoutes[0];
+  
   const [formData, setFormData] = useState<RaceData>({
     name: '',
     description: '',
     startDate: '',
     endDate: '',
     type: 'solo',
-    route: 'nyc-marathon',
-    targetDistance: 42.2,
+    route: defaultRoute.id,
+    targetDistance: defaultRoute.distance,
     isPrivate: false
   });
 
-  const defaultRoute = marathonRoutes.find(route => route.id === 'nyc') || marathonRoutes[0];
-  const [selectedRoute, setSelectedRoute] = useState({
+  const [selectedRoute, setSelectedRoute] = useState<RoutePreview>({
     coordinates: defaultRoute.coordinates,
     progress: 0,
     imageUrl: defaultRoute.imageUrl
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -78,24 +90,25 @@ export function RaceCreationForm({ onSubmit, onCancel }: RaceCreationFormProps) 
           {/* Basic Information */}
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Race Name</label>
-              <input
-                type="text"
+              <Label htmlFor="name">Race Name</Label>
+              <Input
+                id="name"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-md"
+                placeholder="Enter race name"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Description</label>
-              <textarea
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
                 name="description"
                 value={formData.description}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-md"
+                placeholder="Describe your race"
                 rows={3}
               />
             </div>
@@ -104,24 +117,24 @@ export function RaceCreationForm({ onSubmit, onCancel }: RaceCreationFormProps) 
           {/* Dates */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Start Date</label>
-              <input
-                type="datetime-local"
+              <Label htmlFor="startDate">Start Date</Label>
+              <Input
+                id="startDate"
                 name="startDate"
+                type="datetime-local"
                 value={formData.startDate}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-md"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">End Date</label>
-              <input
-                type="datetime-local"
+              <Label htmlFor="endDate">End Date</Label>
+              <Input
+                id="endDate"
                 name="endDate"
+                type="datetime-local"
                 value={formData.endDate}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-md"
                 required
               />
             </div>
@@ -130,12 +143,14 @@ export function RaceCreationForm({ onSubmit, onCancel }: RaceCreationFormProps) 
           {/* Race Type and Settings */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Race Type</label>
+              <Label htmlFor="type">Race Type</Label>
               <select
+                id="type"
                 name="type"
                 value={formData.type}
                 onChange={handleInputChange}
                 className="w-full p-2 border rounded-md"
+                required
               >
                 <option value="solo">Solo Race</option>
                 <option value="group">Group Race</option>
@@ -143,13 +158,13 @@ export function RaceCreationForm({ onSubmit, onCancel }: RaceCreationFormProps) 
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Target Distance (km)</label>
-              <input
-                type="number"
+              <Label htmlFor="targetDistance">Target Distance (km)</Label>
+              <Input
+                id="targetDistance"
                 name="targetDistance"
+                type="number"
                 value={formData.targetDistance}
                 onChange={handleInputChange}
-                className="w-full p-2 border rounded-md"
                 min="1"
                 step="0.1"
                 required
@@ -159,21 +174,21 @@ export function RaceCreationForm({ onSubmit, onCancel }: RaceCreationFormProps) 
 
           {/* Route Selection */}
           <div className="space-y-4">
-            <label className="block">
-              <span className="text-gray-700">Route</span>
-              <select
-                name="route"
-                value={formData.route}
-                onChange={handleInputChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              >
-                {marathonRoutes.map(route => (
-                  <option key={route.id} value={route.id}>
-                    {route.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <Label htmlFor="route">Route</Label>
+            <select
+              id="route"
+              name="route"
+              value={formData.route}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded-md"
+              required
+            >
+              {marathonRoutes.map(route => (
+                <option key={route.id} value={route.id}>
+                  {route.name}
+                </option>
+              ))}
+            </select>
 
             {/* Route Preview */}
             <div className="rounded-lg overflow-hidden">
@@ -190,7 +205,6 @@ export function RaceCreationForm({ onSubmit, onCancel }: RaceCreationFormProps) 
               <div className="h-[300px]">
                 <Map 
                   coordinates={selectedRoute.coordinates}
-                  progress={0}
                   className="w-full h-full"
                 />
               </div>
@@ -201,12 +215,13 @@ export function RaceCreationForm({ onSubmit, onCancel }: RaceCreationFormProps) 
           <div className="flex items-center space-x-2">
             <input
               type="checkbox"
+              id="isPrivate"
               name="isPrivate"
               checked={formData.isPrivate}
               onChange={(e) => setFormData(prev => ({ ...prev, isPrivate: e.target.checked }))}
               className="rounded border-gray-300"
             />
-            <label className="text-sm">Make this race private</label>
+            <Label htmlFor="isPrivate">Make this race private</Label>
           </div>
         </CardContent>
 

@@ -141,8 +141,10 @@ exports.Prisma.RaceScalarFieldEnum = {
   name: 'name',
   description: 'description',
   distance: 'distance',
+  progress: 'progress',
   startDate: 'startDate',
   endDate: 'endDate',
+  status: 'status',
   imageUrl: 'imageUrl',
   userId: 'userId',
   createdAt: 'createdAt',
@@ -194,13 +196,20 @@ exports.Prisma.ActivityScalarFieldEnum = {
   stravaId: 'stravaId',
   name: 'name',
   distance: 'distance',
-  movingTime: 'movingTime',
-  elapsedTime: 'elapsedTime',
-  startDate: 'startDate',
+  date: 'date',
   type: 'type',
+  raceId: 'raceId',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ActivitySyncScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  syncedAt: 'syncedAt',
+  activitiesCount: 'activitiesCount',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.ParticipationScalarFieldEnum = {
@@ -247,7 +256,11 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
-
+exports.ChatMessageType = exports.$Enums.ChatMessageType = {
+  user: 'user',
+  system: 'system',
+  achievement: 'achievement'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
@@ -257,6 +270,7 @@ exports.Prisma.ModelName = {
   Checkpoint: 'Checkpoint',
   Cheer: 'Cheer',
   Activity: 'Activity',
+  ActivitySync: 'ActivitySync',
   Participation: 'Participation',
   ChatMessage: 'ChatMessage'
 };

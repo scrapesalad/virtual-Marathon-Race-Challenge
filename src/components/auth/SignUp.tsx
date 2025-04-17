@@ -8,7 +8,7 @@ import { LoginButton } from './LoginButton';
 import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import Link from 'next/link';
-import { useToast } from '../ui/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 
 export function SignUp() {
   const router = useRouter();
@@ -16,7 +16,8 @@ export function SignUp() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    name: '',
+    firstName: '',
+    lastName: '',
     confirmPassword: ''
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -25,8 +26,12 @@ export function SignUp() {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    }
+
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
     }
 
     if (!formData.email.trim()) {
@@ -80,7 +85,8 @@ export function SignUp() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.name,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
           email: formData.email,
           password: formData.password,
         }),
@@ -128,20 +134,38 @@ export function SignUp() {
         <CardContent>
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="firstName">First Name</Label>
               <Input
-                id="name"
-                name="name"
+                id="firstName"
+                name="firstName"
                 type="text"
-                autoComplete="name"
+                autoComplete="given-name"
                 required
-                value={formData.name}
+                value={formData.firstName}
                 onChange={handleChange}
-                error={errors.name}
-                className={errors.name ? 'border-red-500' : ''}
+                error={errors.firstName}
+                className={errors.firstName ? 'border-red-500' : ''}
               />
-              {errors.name && (
-                <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+              {errors.firstName && (
+                <p className="mt-1 text-sm text-red-500">{errors.firstName}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input
+                id="lastName"
+                name="lastName"
+                type="text"
+                autoComplete="family-name"
+                required
+                value={formData.lastName}
+                onChange={handleChange}
+                error={errors.lastName}
+                className={errors.lastName ? 'border-red-500' : ''}
+              />
+              {errors.lastName && (
+                <p className="mt-1 text-sm text-red-500">{errors.lastName}</p>
               )}
             </div>
 

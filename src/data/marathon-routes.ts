@@ -11,6 +11,8 @@ export interface MarathonRoute {
   elevationGain: number; // in meters
   difficulty: 'easy' | 'moderate' | 'challenging' | 'difficult';
   courseRecord: string;
+  recordHolder: string;
+  recordYear: number;
   imageUrl?: string; // URL to a representative image
 }
 
@@ -39,7 +41,7 @@ export const marathonRoutes: MarathonRoute[] = [
       [-71.6153, 42.3512], // Brookline
       [-71.0709, 42.3512]  // Finish in Boston
     ],
-    imageUrl: '/images/boston-marathon.jpg' // Updated to use the new image
+    imageUrl: '/images/boston-finish-line.jpg'
   },
   {
     id: 'nyc',
@@ -58,7 +60,7 @@ export const marathonRoutes: MarathonRoute[] = [
       [40.7829, -73.9654], // Bronx
       [40.7589, -73.9851], // Manhattan (Finish)
     ],
-    imageUrl: DEFAULT_RACE_IMAGE
+    imageUrl: '/images/nyc.jpg'
   },
   {
     id: 'chicago',

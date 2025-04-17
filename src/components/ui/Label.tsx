@@ -1,40 +1,45 @@
+'use client';
+
+import * as React from "react";
 import { cn } from "@/lib/utils";
-import { ComponentPropsWithoutRef, ReactNode } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
-interface LabelProps extends ComponentPropsWithoutRef<"label"> {
-  children: ReactNode;
-  variant?: "default" | "secondary" | "ghost";
-  size?: "sm" | "md" | "lg";
-  className?: string;
-}
+const labelVariants = cva(
+  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+  {
+    variants: {
+      variant: {
+        default: "",
+        secondary: "text-secondary-foreground",
+        ghost: "text-muted-foreground",
+      },
+      size: {
+        sm: "text-xs",
+        md: "text-sm",
+        lg: "text-base",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md",
+    },
+  }
+);
 
-export function Label({
-  children,
-  variant = "default",
-  size = "md",
-  className,
-  ...props
-}: LabelProps) {
-  return (
+interface LabelProps
+  extends React.LabelHTMLAttributes<HTMLLabelElement>,
+    VariantProps<typeof labelVariants> {}
+
+const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
+  ({ className, variant, size, ...props }, ref) => (
     <label
-      className={cn(
-        "inline-block font-medium",
-        {
-          // Variants
-          "text-gray-900": variant === "default",
-          "text-gray-600": variant === "secondary",
-          "text-gray-500": variant === "ghost",
-          
-          // Sizes
-          "text-sm": size === "sm",
-          "text-base": size === "md",
-          "text-lg": size === "lg",
-        },
-        className
-      )}
+      ref={ref}
+      className={cn(labelVariants({ variant, size, className }))}
       {...props}
-    >
-      {children}
-    </label>
-  );
-} 
+    />
+  )
+);
+
+Label.displayName = "Label";
+
+export { Label, labelVariants }; 

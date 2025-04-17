@@ -29,10 +29,7 @@ const toastVariants = cva(
     variants: {
       variant: {
         default: 'border bg-background',
-        success: 'border-green-500 bg-green-50 text-green-900',
-        error: 'border-red-500 bg-red-50 text-red-900',
-        warning: 'border-yellow-500 bg-yellow-50 text-yellow-900',
-        info: 'border-blue-500 bg-blue-50 text-blue-900',
+        destructive: 'destructive group border-destructive bg-destructive text-destructive-foreground',
       },
     },
     defaultVariants: {
@@ -127,17 +124,4 @@ export {
   ToastDescription,
   ToastClose,
   ToastAction,
-};
-
-interface ToastOptions {
-  title?: string;
-  description?: string;
-  variant?: 'default' | 'success' | 'error' | 'warning' | 'info';
-  action?: ToastActionElement;
-}
-
-export const toast = ({ title, description, variant = 'default', action }: ToastOptions) => {
-  // This is a placeholder implementation
-  // In a real application, you would use a toast library or create a toast context
-  console.log(`Toast: ${variant} - ${title} - ${description}`);
 }; 

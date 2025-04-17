@@ -1,18 +1,24 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AppLayout } from '@/components/layout/AppLayout';
-import { Toaster } from 'react-hot-toast';
+import { ClientLayout } from '@/components/layout/ClientLayout';
+import { Navigation } from '@/components/Navigation';
 
 const inter = Inter({
   subsets: ["latin"],
   display: 'swap',
 });
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export const metadata: Metadata = {
   title: "Virtual Race",
-  description: "Run virtual races with friends",
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+  description: "Join virtual marathons and compete with runners worldwide",
 };
 
 export default function RootLayout({
@@ -23,11 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <AppLayout>
-          {children}
-        </AppLayout>
-        <Toaster position="bottom-right" />
+        <Navigation />
+        <main className="pt-16">
+          <ClientLayout>{children}</ClientLayout>
+        </main>
       </body>
     </html>
   );
-}
+} 

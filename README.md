@@ -1,59 +1,134 @@
 # Virtual Race
 
-A virtual race platform built with Next.js, Prisma, and Strava integration.
+A virtual racing platform that integrates with Strava to create and participate in virtual races.
 
-## Live Demo
+## Prerequisites
 
-The application is deployed at [https://virtual-race.vercel.app/](https://virtual-race.vercel.app/)
-
-## Features
-
-- User authentication with NextAuth.js
-- Strava integration for activity tracking
-- Interactive race maps with Mapbox
-- Real-time race progress tracking
-- Mobile-responsive design
-
-## Tech Stack
-
-- Next.js 14
-- TypeScript
-- Prisma (PostgreSQL)
-- NextAuth.js
-- Mapbox GL JS
-- Tailwind CSS
-- Vercel Deployment
+- Node.js 18+ and npm
+- Docker and Docker Compose
+- Git
 
 ## Getting Started
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Set up environment variables:
-   - Copy `.env.example` to `.env.local`
-   - Fill in all required environment variables
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/virtual-race.git
+cd virtual-race
+```
 
-4. Run the development server:
-   ```bash
-   npm run dev
-   ```
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Set up environment variables:
+```bash
+cp .env.example .env
+```
+Edit the `.env` file with your configuration values.
+
+4. Start the database and pgAdmin:
+```bash
+docker-compose up -d
+```
+
+5. Access pgAdmin:
+- Open http://localhost:5050 in your browser
+- Login with:
+  - Email: admin@virtualrace.com
+  - Password: admin
+- Add a new server in pgAdmin:
+  - Name: Virtual Race
+  - Host: postgres
+  - Port: 5432
+  - Database: virtual_race
+  - Username: postgres
+  - Password: password (or your custom password from .env)
+
+6. Run database migrations:
+```bash
+npx prisma migrate dev
+```
+
+7. Start the development server:
+```bash
+npm run dev
+```
+
+The application will be available at http://localhost:3000
+
+## Database Management
+
+### Using pgAdmin 4
+- Access pgAdmin at http://localhost:5050
+- Use the GUI to manage your database, run queries, and view data
+
+### Using Prisma Studio
+```bash
+npx prisma studio
+```
+Access Prisma Studio at http://localhost:5555
+
+### Running Migrations
+```bash
+# Create a new migration
+npx prisma migrate dev --name your_migration_name
+
+# Apply migrations
+npx prisma migrate deploy
+
+# Reset database
+npx prisma migrate reset
+```
 
 ## Environment Variables
 
-See `.env.example` for all required environment variables.
+Key environment variables:
 
-## Deployment
+- `DATABASE_URL`: PostgreSQL connection string
+- `POSTGRES_USER`: Database user
+- `POSTGRES_PASSWORD`: Database password
+- `POSTGRES_DB`: Database name
+- `NEXTAUTH_SECRET`: Secret for NextAuth.js
+- `STRAVA_CLIENT_ID`: Your Strava API client ID
+- `STRAVA_CLIENT_SECRET`: Your Strava API client secret
 
-The application is deployed on Vercel. To deploy your own instance:
+See `.env.example` for all available options.
 
-1. Fork this repository
-2. Create a new project on Vercel
-3. Connect your GitHub repository
-4. Add all required environment variables
-5. Deploy!
+## Development Tools
+
+- **Next.js 14**: React framework
+- **Prisma**: Database ORM
+- **PostgreSQL**: Database
+- **pgAdmin 4**: Database management
+- **TailwindCSS**: Styling
+- **TypeScript**: Type safety
+- **ESLint**: Code linting
+- **Prettier**: Code formatting
+
+## Docker Commands
+
+```bash
+# Start services
+docker-compose up -d
+
+# Stop services
+docker-compose down
+
+# View logs
+docker-compose logs -f
+
+# Reset everything (including volumes)
+docker-compose down -v
+```
+
+## Contributing
+
+1. Create a feature branch
+2. Make your changes
+3. Run tests
+4. Submit a pull request
 
 ## License
 
-MIT
+MIT License - see LICENSE file for details

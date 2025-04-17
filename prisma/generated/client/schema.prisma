@@ -19,7 +19,7 @@ model User {
   emailVerified           Boolean         @default(false)
   verificationToken       String?
   verificationTokenExpiry DateTime?
-  stravaId                String?
+  stravaId                String?         @unique
   stravaAccessToken       String?
   stravaRefreshToken      String?
   stravaTokenExpiresAt    DateTime?
@@ -30,6 +30,7 @@ model User {
   participations          Participation[]
   userRaces               UserRace[]
   chatMessages            ChatMessage[]
+  activitySyncs           ActivitySync[]
 }
 
 model Race {
@@ -37,8 +38,10 @@ model Race {
   name           String
   description    String?
   distance       Float
+  progress       Float           @default(0)
   startDate      DateTime
   endDate        DateTime
+  status         String          @default("ACTIVE") // ACTIVE, COMPLETED, CANCELLED
   imageUrl       String?
   userId         String
   user           User            @relation(fields: [userId], references: [id])
@@ -48,6 +51,7 @@ model Race {
   userRaces      UserRace[]
   checkpoints    Checkpoint[]
   chatMessages   ChatMessage[]
+  activities     Activity[]
 }
 
 model UserRace {
@@ -100,18 +104,27 @@ model Cheer {
 }
 
 model Activity {
-  id          String   @id @default(cuid())
-  stravaId    String   @unique
-  name        String
-  distance    Float
-  movingTime  Int
-  elapsedTime Int
-  startDate   DateTime
-  type        String
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  stravaId  String   @unique
+  name      String
+  distance  Float
+  date      DateTime
+  type      String
+  raceId    String
+  race      Race     @relation(fields: [raceId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ActivitySync {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  syncedAt        DateTime
+  activitiesCount Int
+  createdAt       DateTime @default(now())
 }
 
 model Participation {
@@ -127,15 +140,21 @@ model Participation {
   @@unique([userId, raceId])
 }
 
+enum ChatMessageType {
+  user
+  system
+  achievement
+}
+
 model ChatMessage {
-  id         String   @id @default(cuid())
+  id         String          @id @default(cuid())
   raceId     String
   userId     String
   userName   String
   userAvatar String?
   content    String
-  type       String   @default("user")
-  timestamp  DateTime @default(now())
-  race       Race     @relation(fields: [raceId], references: [id], onDelete: Cascade)
-  user       User     @relation(fields: [userId], references: [id])
+  type       ChatMessageType @default(user)
+  timestamp  DateTime        @default(now())
+  race       Race            @relation(fields: [raceId], references: [id], onDelete: Cascade)
+  user       User            @relation(fields: [userId], references: [id])
 }

@@ -1,27 +1,25 @@
 'use client';
 
-import { useState } from 'react';
-import { DifficultyFilter } from '@/components/races/DifficultyFilter';
-import { Marathon } from '@/types';
-import { useRouter } from 'next/navigation';
+import { getAllMarathonRoutes } from '@/data/marathon-routes';
+import { RaceCard } from '@/components/races/RaceCard';
 
 export default function RacesPage() {
-  const router = useRouter();
-  const [selectedRace, setSelectedRace] = useState<Marathon | null>(null);
-
-  const handleSelectRace = (race: Marathon) => {
-    setSelectedRace(race);
-    router.push(`/races/${race.id}`);
-  };
+  const races = getAllMarathonRoutes();
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Choose Your Race</h1>
-      <p className="text-lg text-gray-600 mb-8">
-        Select a difficulty level to see available races. Each race has unique challenges and experiences.
-      </p>
-      
-      <DifficultyFilter onSelectRace={handleSelectRace} />
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2">Choose your race</h1>
+        <p className="text-gray-600">
+          Select from our collection of virtual marathons from around the world
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {races.map((race) => (
+          <RaceCard key={race.id} race={race} />
+        ))}
+      </div>
     </div>
   );
 } 

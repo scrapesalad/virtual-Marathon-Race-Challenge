@@ -1,56 +1,60 @@
-import { MarathonPage } from '@/components/races/MarathonPage';
-
-const nycMarathon = {
-  id: 'nyc-marathon',
-  name: 'New York City Marathon',
-  description: 'Experience the energy of the Big Apple as you run through all five boroughs of New York City. The TCS New York City Marathon is the largest marathon in the world, with over 50,000 runners participating each year.',
-  location: 'New York City, USA',
-  distance: 42.195,
-  elevationGain: 120,
-  difficulty: 'challenging',
-  coordinates: [
-    [-73.9911, 40.7306] as [number, number], // Staten Island
-    [-74.0060, 40.7128] as [number, number], // Brooklyn
-    [-73.9352, 40.7306] as [number, number], // Queens
-    [-73.9352, 40.7128] as [number, number], // Manhattan
-    [-73.9911, 40.7128] as [number, number], // Bronx
-    [-73.9911, 40.7306] as [number, number], // Central Park Finish
-  ],
-  milestones: [
-    {
-      distance: 0,
-      location: 'Staten Island',
-      description: 'Start at the Verrazzano-Narrows Bridge',
-    },
-    {
-      distance: 10,
-      location: 'Brooklyn',
-      description: 'Run through diverse neighborhoods and cheering crowds',
-    },
-    {
-      distance: 20,
-      location: 'Queens',
-      description: 'Cross the Queensboro Bridge into Manhattan',
-    },
-    {
-      distance: 30,
-      location: 'Manhattan',
-      description: 'Run up First Avenue with massive crowds',
-    },
-    {
-      distance: 35,
-      location: 'Bronx',
-      description: 'Short but challenging section through the Bronx',
-    },
-    {
-      distance: 42.195,
-      location: 'Central Park',
-      description: 'Finish in the iconic Central Park',
-    },
-  ],
-  image: '/images/races/nyc-marathon.jpg',
-};
+import { Suspense } from 'react';
+import { MarathonMap } from '@/components/races/MarathonMap';
+import { nycMarathonRoute } from '@/data/nyc-marathon-route';
+import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
 
 export default function NYCMarathonPage() {
-  return <MarathonPage marathon={nycMarathon} />;
+  // In a real app, we would fetch the user's progress from the API
+  const userProgress = 35; // Example progress
+
+  return (
+    <div className="container mx-auto py-8">
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">{nycMarathonRoute.name}</h1>
+            <p className="text-gray-500">{nycMarathonRoute.location}</p>
+          </div>
+          <Badge variant="outline" className="text-lg">
+            {nycMarathonRoute.distance}km
+          </Badge>
+        </div>
+
+        <Card>
+          <CardContent className="p-6">
+            <p className="text-gray-700">{nycMarathonRoute.description}</p>
+          </CardContent>
+        </Card>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <h2 className="text-xl font-semibold">Race Details</h2>
+            </CardHeader>
+            <CardContent>
+              <dl className="space-y-4">
+                <div>
+                  <dt className="text-sm text-gray-500">Elevation Gain</dt>
+                  <dd className="text-lg font-medium">{nycMarathonRoute.elevationGain}m</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-gray-500">Difficulty</dt>
+                  <dd className="text-lg font-medium capitalize">{nycMarathonRoute.difficulty}</dd>
+                </div>
+                <div>
+                  <dt className="text-sm text-gray-500">Course Record</dt>
+                  <dd className="text-lg font-medium">{nycMarathonRoute.courseRecord}</dd>
+                </div>
+              </dl>
+            </CardContent>
+          </Card>
+
+          <Suspense fallback={<div>Loading map...</div>}>
+            <MarathonMap route={nycMarathonRoute} userProgress={userProgress} />
+          </Suspense>
+        </div>
+      </div>
+    </div>
+  );
 } 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Map } from '../Map';
 import { Button } from '../ui/Button';
 import { Card, CardContent, CardHeader } from '../ui/Card';
@@ -8,13 +8,15 @@ import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
 import { Loader2, MapPin, X } from 'lucide-react';
 
+type MarkerType = 'funny' | 'scary' | 'interesting' | 'warning';
+
 interface Marker {
   id: string;
   latitude: number;
   longitude: number;
   title: string;
   description: string;
-  type: 'funny' | 'scary' | 'interesting' | 'warning';
+  type: MarkerType;
   createdAt: string;
 }
 
@@ -31,7 +33,7 @@ export function RouteMarkers({ raceId, initialMarkers = [], onMarkerAdd, onMarke
   const [newMarker, setNewMarker] = useState({
     title: '',
     description: '',
-    type: 'interesting' as const,
+    type: 'interesting' as MarkerType,
   });
   const [selectedLocation, setSelectedLocation] = useState<[number, number] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -91,7 +93,7 @@ export function RouteMarkers({ raceId, initialMarkers = [], onMarkerAdd, onMarke
     }
   };
 
-  const getMarkerColor = (type: string) => {
+  const getMarkerColor = (type: MarkerType) => {
     switch (type) {
       case 'funny':
         return 'bg-yellow-500';
@@ -148,15 +150,16 @@ export function RouteMarkers({ raceId, initialMarkers = [], onMarkerAdd, onMarke
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-1">Type</label>
-                  <Select
+                  <select
                     value={newMarker.type}
-                    onValueChange={(value) => setNewMarker(prev => ({ ...prev, type: value as any }))}
+                    onChange={(e) => setNewMarker(prev => ({ ...prev, type: e.target.value as MarkerType }))}
+                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   >
                     <option value="funny">Funny</option>
                     <option value="scary">Scary</option>
                     <option value="interesting">Interesting</option>
                     <option value="warning">Warning</option>
-                  </Select>
+                  </select>
                 </div>
                 <div className="flex gap-2">
                   <Button

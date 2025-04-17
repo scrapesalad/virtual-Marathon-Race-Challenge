@@ -49,6 +49,11 @@ export type Cheer = $Result.DefaultSelection<Prisma.$CheerPayload>
  */
 export type Activity = $Result.DefaultSelection<Prisma.$ActivityPayload>
 /**
+ * Model ActivitySync
+ * 
+ */
+export type ActivitySync = $Result.DefaultSelection<Prisma.$ActivitySyncPayload>
+/**
  * Model Participation
  * 
  */
@@ -58,6 +63,24 @@ export type Participation = $Result.DefaultSelection<Prisma.$ParticipationPayloa
  * 
  */
 export type ChatMessage = $Result.DefaultSelection<Prisma.$ChatMessagePayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const ChatMessageType: {
+  user: 'user',
+  system: 'system',
+  achievement: 'achievement'
+};
+
+export type ChatMessageType = (typeof ChatMessageType)[keyof typeof ChatMessageType]
+
+}
+
+export type ChatMessageType = $Enums.ChatMessageType
+
+export const ChatMessageType: typeof $Enums.ChatMessageType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -253,6 +276,16 @@ export class PrismaClient<
     * ```
     */
   get activity(): Prisma.ActivityDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.activitySync`: Exposes CRUD operations for the **ActivitySync** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ActivitySyncs
+    * const activitySyncs = await prisma.activitySync.findMany()
+    * ```
+    */
+  get activitySync(): Prisma.ActivitySyncDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.participation`: Exposes CRUD operations for the **Participation** model.
@@ -720,6 +753,7 @@ export namespace Prisma {
     Checkpoint: 'Checkpoint',
     Cheer: 'Cheer',
     Activity: 'Activity',
+    ActivitySync: 'ActivitySync',
     Participation: 'Participation',
     ChatMessage: 'ChatMessage'
   };
@@ -740,7 +774,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "race" | "userRace" | "verificationToken" | "checkpoint" | "cheer" | "activity" | "participation" | "chatMessage"
+      modelProps: "user" | "race" | "userRace" | "verificationToken" | "checkpoint" | "cheer" | "activity" | "activitySync" | "participation" | "chatMessage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1262,6 +1296,80 @@ export namespace Prisma {
           }
         }
       }
+      ActivitySync: {
+        payload: Prisma.$ActivitySyncPayload<ExtArgs>
+        fields: Prisma.ActivitySyncFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ActivitySyncFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivitySyncPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ActivitySyncFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivitySyncPayload>
+          }
+          findFirst: {
+            args: Prisma.ActivitySyncFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivitySyncPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ActivitySyncFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivitySyncPayload>
+          }
+          findMany: {
+            args: Prisma.ActivitySyncFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivitySyncPayload>[]
+          }
+          create: {
+            args: Prisma.ActivitySyncCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivitySyncPayload>
+          }
+          createMany: {
+            args: Prisma.ActivitySyncCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ActivitySyncCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivitySyncPayload>[]
+          }
+          delete: {
+            args: Prisma.ActivitySyncDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivitySyncPayload>
+          }
+          update: {
+            args: Prisma.ActivitySyncUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivitySyncPayload>
+          }
+          deleteMany: {
+            args: Prisma.ActivitySyncDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ActivitySyncUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ActivitySyncUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivitySyncPayload>[]
+          }
+          upsert: {
+            args: Prisma.ActivitySyncUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ActivitySyncPayload>
+          }
+          aggregate: {
+            args: Prisma.ActivitySyncAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateActivitySync>
+          }
+          groupBy: {
+            args: Prisma.ActivitySyncGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ActivitySyncGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ActivitySyncCountArgs<ExtArgs>
+            result: $Utils.Optional<ActivitySyncCountAggregateOutputType> | number
+          }
+        }
+      }
       Participation: {
         payload: Prisma.$ParticipationPayload<ExtArgs>
         fields: Prisma.ParticipationFieldRefs
@@ -1501,6 +1609,7 @@ export namespace Prisma {
     checkpoint?: CheckpointOmit
     cheer?: CheerOmit
     activity?: ActivityOmit
+    activitySync?: ActivitySyncOmit
     participation?: ParticipationOmit
     chatMessage?: ChatMessageOmit
   }
@@ -1602,6 +1711,7 @@ export namespace Prisma {
     participations: number
     userRaces: number
     chatMessages: number
+    activitySyncs: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1610,6 +1720,7 @@ export namespace Prisma {
     participations?: boolean | UserCountOutputTypeCountParticipationsArgs
     userRaces?: boolean | UserCountOutputTypeCountUserRacesArgs
     chatMessages?: boolean | UserCountOutputTypeCountChatMessagesArgs
+    activitySyncs?: boolean | UserCountOutputTypeCountActivitySyncsArgs
   }
 
   // Custom InputTypes
@@ -1658,6 +1769,13 @@ export namespace Prisma {
     where?: ChatMessageWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountActivitySyncsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivitySyncWhereInput
+  }
+
 
   /**
    * Count Type RaceCountOutputType
@@ -1668,6 +1786,7 @@ export namespace Prisma {
     userRaces: number
     checkpoints: number
     chatMessages: number
+    activities: number
   }
 
   export type RaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1675,6 +1794,7 @@ export namespace Prisma {
     userRaces?: boolean | RaceCountOutputTypeCountUserRacesArgs
     checkpoints?: boolean | RaceCountOutputTypeCountCheckpointsArgs
     chatMessages?: boolean | RaceCountOutputTypeCountChatMessagesArgs
+    activities?: boolean | RaceCountOutputTypeCountActivitiesArgs
   }
 
   // Custom InputTypes
@@ -1714,6 +1834,13 @@ export namespace Prisma {
    */
   export type RaceCountOutputTypeCountChatMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ChatMessageWhereInput
+  }
+
+  /**
+   * RaceCountOutputType without action
+   */
+  export type RaceCountOutputTypeCountActivitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivityWhereInput
   }
 
 
@@ -2009,6 +2136,7 @@ export namespace Prisma {
     participations?: boolean | User$participationsArgs<ExtArgs>
     userRaces?: boolean | User$userRacesArgs<ExtArgs>
     chatMessages?: boolean | User$chatMessagesArgs<ExtArgs>
+    activitySyncs?: boolean | User$activitySyncsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2076,6 +2204,7 @@ export namespace Prisma {
     participations?: boolean | User$participationsArgs<ExtArgs>
     userRaces?: boolean | User$userRacesArgs<ExtArgs>
     chatMessages?: boolean | User$chatMessagesArgs<ExtArgs>
+    activitySyncs?: boolean | User$activitySyncsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2089,6 +2218,7 @@ export namespace Prisma {
       participations: Prisma.$ParticipationPayload<ExtArgs>[]
       userRaces: Prisma.$UserRacePayload<ExtArgs>[]
       chatMessages: Prisma.$ChatMessagePayload<ExtArgs>[]
+      activitySyncs: Prisma.$ActivitySyncPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2506,6 +2636,7 @@ export namespace Prisma {
     participations<T extends User$participationsArgs<ExtArgs> = {}>(args?: Subset<T, User$participationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParticipationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     userRaces<T extends User$userRacesArgs<ExtArgs> = {}>(args?: Subset<T, User$userRacesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chatMessages<T extends User$chatMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$chatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    activitySyncs<T extends User$activitySyncsArgs<ExtArgs> = {}>(args?: Subset<T, User$activitySyncsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3059,6 +3190,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.activitySyncs
+   */
+  export type User$activitySyncsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncInclude<ExtArgs> | null
+    where?: ActivitySyncWhereInput
+    orderBy?: ActivitySyncOrderByWithRelationInput | ActivitySyncOrderByWithRelationInput[]
+    cursor?: ActivitySyncWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ActivitySyncScalarFieldEnum | ActivitySyncScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3091,10 +3246,12 @@ export namespace Prisma {
 
   export type RaceAvgAggregateOutputType = {
     distance: number | null
+    progress: number | null
   }
 
   export type RaceSumAggregateOutputType = {
     distance: number | null
+    progress: number | null
   }
 
   export type RaceMinAggregateOutputType = {
@@ -3102,8 +3259,10 @@ export namespace Prisma {
     name: string | null
     description: string | null
     distance: number | null
+    progress: number | null
     startDate: Date | null
     endDate: Date | null
+    status: string | null
     imageUrl: string | null
     userId: string | null
     createdAt: Date | null
@@ -3115,8 +3274,10 @@ export namespace Prisma {
     name: string | null
     description: string | null
     distance: number | null
+    progress: number | null
     startDate: Date | null
     endDate: Date | null
+    status: string | null
     imageUrl: string | null
     userId: string | null
     createdAt: Date | null
@@ -3128,8 +3289,10 @@ export namespace Prisma {
     name: number
     description: number
     distance: number
+    progress: number
     startDate: number
     endDate: number
+    status: number
     imageUrl: number
     userId: number
     createdAt: number
@@ -3140,10 +3303,12 @@ export namespace Prisma {
 
   export type RaceAvgAggregateInputType = {
     distance?: true
+    progress?: true
   }
 
   export type RaceSumAggregateInputType = {
     distance?: true
+    progress?: true
   }
 
   export type RaceMinAggregateInputType = {
@@ -3151,8 +3316,10 @@ export namespace Prisma {
     name?: true
     description?: true
     distance?: true
+    progress?: true
     startDate?: true
     endDate?: true
+    status?: true
     imageUrl?: true
     userId?: true
     createdAt?: true
@@ -3164,8 +3331,10 @@ export namespace Prisma {
     name?: true
     description?: true
     distance?: true
+    progress?: true
     startDate?: true
     endDate?: true
+    status?: true
     imageUrl?: true
     userId?: true
     createdAt?: true
@@ -3177,8 +3346,10 @@ export namespace Prisma {
     name?: true
     description?: true
     distance?: true
+    progress?: true
     startDate?: true
     endDate?: true
+    status?: true
     imageUrl?: true
     userId?: true
     createdAt?: true
@@ -3277,8 +3448,10 @@ export namespace Prisma {
     name: string
     description: string | null
     distance: number
+    progress: number
     startDate: Date
     endDate: Date
+    status: string
     imageUrl: string | null
     userId: string
     createdAt: Date
@@ -3309,8 +3482,10 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     distance?: boolean
+    progress?: boolean
     startDate?: boolean
     endDate?: boolean
+    status?: boolean
     imageUrl?: boolean
     userId?: boolean
     createdAt?: boolean
@@ -3320,6 +3495,7 @@ export namespace Prisma {
     userRaces?: boolean | Race$userRacesArgs<ExtArgs>
     checkpoints?: boolean | Race$checkpointsArgs<ExtArgs>
     chatMessages?: boolean | Race$chatMessagesArgs<ExtArgs>
+    activities?: boolean | Race$activitiesArgs<ExtArgs>
     _count?: boolean | RaceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["race"]>
 
@@ -3328,8 +3504,10 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     distance?: boolean
+    progress?: boolean
     startDate?: boolean
     endDate?: boolean
+    status?: boolean
     imageUrl?: boolean
     userId?: boolean
     createdAt?: boolean
@@ -3342,8 +3520,10 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     distance?: boolean
+    progress?: boolean
     startDate?: boolean
     endDate?: boolean
+    status?: boolean
     imageUrl?: boolean
     userId?: boolean
     createdAt?: boolean
@@ -3356,21 +3536,24 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     distance?: boolean
+    progress?: boolean
     startDate?: boolean
     endDate?: boolean
+    status?: boolean
     imageUrl?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type RaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "distance" | "startDate" | "endDate" | "imageUrl" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["race"]>
+  export type RaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "distance" | "progress" | "startDate" | "endDate" | "status" | "imageUrl" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["race"]>
   export type RaceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     participations?: boolean | Race$participationsArgs<ExtArgs>
     userRaces?: boolean | Race$userRacesArgs<ExtArgs>
     checkpoints?: boolean | Race$checkpointsArgs<ExtArgs>
     chatMessages?: boolean | Race$chatMessagesArgs<ExtArgs>
+    activities?: boolean | Race$activitiesArgs<ExtArgs>
     _count?: boolean | RaceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type RaceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3388,14 +3571,17 @@ export namespace Prisma {
       userRaces: Prisma.$UserRacePayload<ExtArgs>[]
       checkpoints: Prisma.$CheckpointPayload<ExtArgs>[]
       chatMessages: Prisma.$ChatMessagePayload<ExtArgs>[]
+      activities: Prisma.$ActivityPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
       description: string | null
       distance: number
+      progress: number
       startDate: Date
       endDate: Date
+      status: string
       imageUrl: string | null
       userId: string
       createdAt: Date
@@ -3799,6 +3985,7 @@ export namespace Prisma {
     userRaces<T extends Race$userRacesArgs<ExtArgs> = {}>(args?: Subset<T, Race$userRacesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     checkpoints<T extends Race$checkpointsArgs<ExtArgs> = {}>(args?: Subset<T, Race$checkpointsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CheckpointPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chatMessages<T extends Race$chatMessagesArgs<ExtArgs> = {}>(args?: Subset<T, Race$chatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    activities<T extends Race$activitiesArgs<ExtArgs> = {}>(args?: Subset<T, Race$activitiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3832,8 +4019,10 @@ export namespace Prisma {
     readonly name: FieldRef<"Race", 'String'>
     readonly description: FieldRef<"Race", 'String'>
     readonly distance: FieldRef<"Race", 'Float'>
+    readonly progress: FieldRef<"Race", 'Float'>
     readonly startDate: FieldRef<"Race", 'DateTime'>
     readonly endDate: FieldRef<"Race", 'DateTime'>
+    readonly status: FieldRef<"Race", 'String'>
     readonly imageUrl: FieldRef<"Race", 'String'>
     readonly userId: FieldRef<"Race", 'String'>
     readonly createdAt: FieldRef<"Race", 'DateTime'>
@@ -4327,6 +4516,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ChatMessageScalarFieldEnum | ChatMessageScalarFieldEnum[]
+  }
+
+  /**
+   * Race.activities
+   */
+  export type Race$activitiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Activity
+     */
+    select?: ActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Activity
+     */
+    omit?: ActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivityInclude<ExtArgs> | null
+    where?: ActivityWhereInput
+    orderBy?: ActivityOrderByWithRelationInput | ActivityOrderByWithRelationInput[]
+    cursor?: ActivityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ActivityScalarFieldEnum | ActivityScalarFieldEnum[]
   }
 
   /**
@@ -8771,14 +8984,10 @@ export namespace Prisma {
 
   export type ActivityAvgAggregateOutputType = {
     distance: number | null
-    movingTime: number | null
-    elapsedTime: number | null
   }
 
   export type ActivitySumAggregateOutputType = {
     distance: number | null
-    movingTime: number | null
-    elapsedTime: number | null
   }
 
   export type ActivityMinAggregateOutputType = {
@@ -8786,10 +8995,9 @@ export namespace Prisma {
     stravaId: string | null
     name: string | null
     distance: number | null
-    movingTime: number | null
-    elapsedTime: number | null
-    startDate: Date | null
+    date: Date | null
     type: string | null
+    raceId: string | null
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -8800,10 +9008,9 @@ export namespace Prisma {
     stravaId: string | null
     name: string | null
     distance: number | null
-    movingTime: number | null
-    elapsedTime: number | null
-    startDate: Date | null
+    date: Date | null
     type: string | null
+    raceId: string | null
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -8814,10 +9021,9 @@ export namespace Prisma {
     stravaId: number
     name: number
     distance: number
-    movingTime: number
-    elapsedTime: number
-    startDate: number
+    date: number
     type: number
+    raceId: number
     userId: number
     createdAt: number
     updatedAt: number
@@ -8827,14 +9033,10 @@ export namespace Prisma {
 
   export type ActivityAvgAggregateInputType = {
     distance?: true
-    movingTime?: true
-    elapsedTime?: true
   }
 
   export type ActivitySumAggregateInputType = {
     distance?: true
-    movingTime?: true
-    elapsedTime?: true
   }
 
   export type ActivityMinAggregateInputType = {
@@ -8842,10 +9044,9 @@ export namespace Prisma {
     stravaId?: true
     name?: true
     distance?: true
-    movingTime?: true
-    elapsedTime?: true
-    startDate?: true
+    date?: true
     type?: true
+    raceId?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -8856,10 +9057,9 @@ export namespace Prisma {
     stravaId?: true
     name?: true
     distance?: true
-    movingTime?: true
-    elapsedTime?: true
-    startDate?: true
+    date?: true
     type?: true
+    raceId?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -8870,10 +9070,9 @@ export namespace Prisma {
     stravaId?: true
     name?: true
     distance?: true
-    movingTime?: true
-    elapsedTime?: true
-    startDate?: true
+    date?: true
     type?: true
+    raceId?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -8971,10 +9170,9 @@ export namespace Prisma {
     stravaId: string
     name: string
     distance: number
-    movingTime: number
-    elapsedTime: number
-    startDate: Date
+    date: Date
     type: string
+    raceId: string
     userId: string
     createdAt: Date
     updatedAt: Date
@@ -9004,13 +9202,13 @@ export namespace Prisma {
     stravaId?: boolean
     name?: boolean
     distance?: boolean
-    movingTime?: boolean
-    elapsedTime?: boolean
-    startDate?: boolean
+    date?: boolean
     type?: boolean
+    raceId?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    race?: boolean | RaceDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["activity"]>
 
@@ -9019,13 +9217,13 @@ export namespace Prisma {
     stravaId?: boolean
     name?: boolean
     distance?: boolean
-    movingTime?: boolean
-    elapsedTime?: boolean
-    startDate?: boolean
+    date?: boolean
     type?: boolean
+    raceId?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    race?: boolean | RaceDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["activity"]>
 
@@ -9034,13 +9232,13 @@ export namespace Prisma {
     stravaId?: boolean
     name?: boolean
     distance?: boolean
-    movingTime?: boolean
-    elapsedTime?: boolean
-    startDate?: boolean
+    date?: boolean
     type?: boolean
+    raceId?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    race?: boolean | RaceDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["activity"]>
 
@@ -9049,29 +9247,32 @@ export namespace Prisma {
     stravaId?: boolean
     name?: boolean
     distance?: boolean
-    movingTime?: boolean
-    elapsedTime?: boolean
-    startDate?: boolean
+    date?: boolean
     type?: boolean
+    raceId?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "stravaId" | "name" | "distance" | "movingTime" | "elapsedTime" | "startDate" | "type" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["activity"]>
+  export type ActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "stravaId" | "name" | "distance" | "date" | "type" | "raceId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["activity"]>
   export type ActivityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    race?: boolean | RaceDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type ActivityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    race?: boolean | RaceDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type ActivityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    race?: boolean | RaceDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $ActivityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Activity"
     objects: {
+      race: Prisma.$RacePayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -9079,10 +9280,9 @@ export namespace Prisma {
       stravaId: string
       name: string
       distance: number
-      movingTime: number
-      elapsedTime: number
-      startDate: Date
+      date: Date
       type: string
+      raceId: string
       userId: string
       createdAt: Date
       updatedAt: Date
@@ -9480,6 +9680,7 @@ export namespace Prisma {
    */
   export interface Prisma__ActivityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    race<T extends RaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RaceDefaultArgs<ExtArgs>>): Prisma__RaceClient<$Result.GetResult<Prisma.$RacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -9514,10 +9715,9 @@ export namespace Prisma {
     readonly stravaId: FieldRef<"Activity", 'String'>
     readonly name: FieldRef<"Activity", 'String'>
     readonly distance: FieldRef<"Activity", 'Float'>
-    readonly movingTime: FieldRef<"Activity", 'Int'>
-    readonly elapsedTime: FieldRef<"Activity", 'Int'>
-    readonly startDate: FieldRef<"Activity", 'DateTime'>
+    readonly date: FieldRef<"Activity", 'DateTime'>
     readonly type: FieldRef<"Activity", 'String'>
+    readonly raceId: FieldRef<"Activity", 'String'>
     readonly userId: FieldRef<"Activity", 'String'>
     readonly createdAt: FieldRef<"Activity", 'DateTime'>
     readonly updatedAt: FieldRef<"Activity", 'DateTime'>
@@ -9932,6 +10132,1098 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ActivityInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ActivitySync
+   */
+
+  export type AggregateActivitySync = {
+    _count: ActivitySyncCountAggregateOutputType | null
+    _avg: ActivitySyncAvgAggregateOutputType | null
+    _sum: ActivitySyncSumAggregateOutputType | null
+    _min: ActivitySyncMinAggregateOutputType | null
+    _max: ActivitySyncMaxAggregateOutputType | null
+  }
+
+  export type ActivitySyncAvgAggregateOutputType = {
+    activitiesCount: number | null
+  }
+
+  export type ActivitySyncSumAggregateOutputType = {
+    activitiesCount: number | null
+  }
+
+  export type ActivitySyncMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    syncedAt: Date | null
+    activitiesCount: number | null
+    createdAt: Date | null
+  }
+
+  export type ActivitySyncMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    syncedAt: Date | null
+    activitiesCount: number | null
+    createdAt: Date | null
+  }
+
+  export type ActivitySyncCountAggregateOutputType = {
+    id: number
+    userId: number
+    syncedAt: number
+    activitiesCount: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ActivitySyncAvgAggregateInputType = {
+    activitiesCount?: true
+  }
+
+  export type ActivitySyncSumAggregateInputType = {
+    activitiesCount?: true
+  }
+
+  export type ActivitySyncMinAggregateInputType = {
+    id?: true
+    userId?: true
+    syncedAt?: true
+    activitiesCount?: true
+    createdAt?: true
+  }
+
+  export type ActivitySyncMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    syncedAt?: true
+    activitiesCount?: true
+    createdAt?: true
+  }
+
+  export type ActivitySyncCountAggregateInputType = {
+    id?: true
+    userId?: true
+    syncedAt?: true
+    activitiesCount?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ActivitySyncAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActivitySync to aggregate.
+     */
+    where?: ActivitySyncWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivitySyncs to fetch.
+     */
+    orderBy?: ActivitySyncOrderByWithRelationInput | ActivitySyncOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ActivitySyncWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivitySyncs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivitySyncs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ActivitySyncs
+    **/
+    _count?: true | ActivitySyncCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ActivitySyncAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ActivitySyncSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ActivitySyncMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ActivitySyncMaxAggregateInputType
+  }
+
+  export type GetActivitySyncAggregateType<T extends ActivitySyncAggregateArgs> = {
+        [P in keyof T & keyof AggregateActivitySync]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateActivitySync[P]>
+      : GetScalarType<T[P], AggregateActivitySync[P]>
+  }
+
+
+
+
+  export type ActivitySyncGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ActivitySyncWhereInput
+    orderBy?: ActivitySyncOrderByWithAggregationInput | ActivitySyncOrderByWithAggregationInput[]
+    by: ActivitySyncScalarFieldEnum[] | ActivitySyncScalarFieldEnum
+    having?: ActivitySyncScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ActivitySyncCountAggregateInputType | true
+    _avg?: ActivitySyncAvgAggregateInputType
+    _sum?: ActivitySyncSumAggregateInputType
+    _min?: ActivitySyncMinAggregateInputType
+    _max?: ActivitySyncMaxAggregateInputType
+  }
+
+  export type ActivitySyncGroupByOutputType = {
+    id: string
+    userId: string
+    syncedAt: Date
+    activitiesCount: number
+    createdAt: Date
+    _count: ActivitySyncCountAggregateOutputType | null
+    _avg: ActivitySyncAvgAggregateOutputType | null
+    _sum: ActivitySyncSumAggregateOutputType | null
+    _min: ActivitySyncMinAggregateOutputType | null
+    _max: ActivitySyncMaxAggregateOutputType | null
+  }
+
+  type GetActivitySyncGroupByPayload<T extends ActivitySyncGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ActivitySyncGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ActivitySyncGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ActivitySyncGroupByOutputType[P]>
+            : GetScalarType<T[P], ActivitySyncGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ActivitySyncSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    syncedAt?: boolean
+    activitiesCount?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activitySync"]>
+
+  export type ActivitySyncSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    syncedAt?: boolean
+    activitiesCount?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activitySync"]>
+
+  export type ActivitySyncSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    syncedAt?: boolean
+    activitiesCount?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["activitySync"]>
+
+  export type ActivitySyncSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    syncedAt?: boolean
+    activitiesCount?: boolean
+    createdAt?: boolean
+  }
+
+  export type ActivitySyncOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "syncedAt" | "activitiesCount" | "createdAt", ExtArgs["result"]["activitySync"]>
+  export type ActivitySyncInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ActivitySyncIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ActivitySyncIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ActivitySyncPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ActivitySync"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      syncedAt: Date
+      activitiesCount: number
+      createdAt: Date
+    }, ExtArgs["result"]["activitySync"]>
+    composites: {}
+  }
+
+  type ActivitySyncGetPayload<S extends boolean | null | undefined | ActivitySyncDefaultArgs> = $Result.GetResult<Prisma.$ActivitySyncPayload, S>
+
+  type ActivitySyncCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ActivitySyncFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ActivitySyncCountAggregateInputType | true
+    }
+
+  export interface ActivitySyncDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ActivitySync'], meta: { name: 'ActivitySync' } }
+    /**
+     * Find zero or one ActivitySync that matches the filter.
+     * @param {ActivitySyncFindUniqueArgs} args - Arguments to find a ActivitySync
+     * @example
+     * // Get one ActivitySync
+     * const activitySync = await prisma.activitySync.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ActivitySyncFindUniqueArgs>(args: SelectSubset<T, ActivitySyncFindUniqueArgs<ExtArgs>>): Prisma__ActivitySyncClient<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ActivitySync that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ActivitySyncFindUniqueOrThrowArgs} args - Arguments to find a ActivitySync
+     * @example
+     * // Get one ActivitySync
+     * const activitySync = await prisma.activitySync.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ActivitySyncFindUniqueOrThrowArgs>(args: SelectSubset<T, ActivitySyncFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ActivitySyncClient<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ActivitySync that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivitySyncFindFirstArgs} args - Arguments to find a ActivitySync
+     * @example
+     * // Get one ActivitySync
+     * const activitySync = await prisma.activitySync.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ActivitySyncFindFirstArgs>(args?: SelectSubset<T, ActivitySyncFindFirstArgs<ExtArgs>>): Prisma__ActivitySyncClient<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ActivitySync that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivitySyncFindFirstOrThrowArgs} args - Arguments to find a ActivitySync
+     * @example
+     * // Get one ActivitySync
+     * const activitySync = await prisma.activitySync.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ActivitySyncFindFirstOrThrowArgs>(args?: SelectSubset<T, ActivitySyncFindFirstOrThrowArgs<ExtArgs>>): Prisma__ActivitySyncClient<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ActivitySyncs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivitySyncFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ActivitySyncs
+     * const activitySyncs = await prisma.activitySync.findMany()
+     * 
+     * // Get first 10 ActivitySyncs
+     * const activitySyncs = await prisma.activitySync.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const activitySyncWithIdOnly = await prisma.activitySync.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ActivitySyncFindManyArgs>(args?: SelectSubset<T, ActivitySyncFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ActivitySync.
+     * @param {ActivitySyncCreateArgs} args - Arguments to create a ActivitySync.
+     * @example
+     * // Create one ActivitySync
+     * const ActivitySync = await prisma.activitySync.create({
+     *   data: {
+     *     // ... data to create a ActivitySync
+     *   }
+     * })
+     * 
+     */
+    create<T extends ActivitySyncCreateArgs>(args: SelectSubset<T, ActivitySyncCreateArgs<ExtArgs>>): Prisma__ActivitySyncClient<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ActivitySyncs.
+     * @param {ActivitySyncCreateManyArgs} args - Arguments to create many ActivitySyncs.
+     * @example
+     * // Create many ActivitySyncs
+     * const activitySync = await prisma.activitySync.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ActivitySyncCreateManyArgs>(args?: SelectSubset<T, ActivitySyncCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ActivitySyncs and returns the data saved in the database.
+     * @param {ActivitySyncCreateManyAndReturnArgs} args - Arguments to create many ActivitySyncs.
+     * @example
+     * // Create many ActivitySyncs
+     * const activitySync = await prisma.activitySync.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ActivitySyncs and only return the `id`
+     * const activitySyncWithIdOnly = await prisma.activitySync.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ActivitySyncCreateManyAndReturnArgs>(args?: SelectSubset<T, ActivitySyncCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ActivitySync.
+     * @param {ActivitySyncDeleteArgs} args - Arguments to delete one ActivitySync.
+     * @example
+     * // Delete one ActivitySync
+     * const ActivitySync = await prisma.activitySync.delete({
+     *   where: {
+     *     // ... filter to delete one ActivitySync
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ActivitySyncDeleteArgs>(args: SelectSubset<T, ActivitySyncDeleteArgs<ExtArgs>>): Prisma__ActivitySyncClient<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ActivitySync.
+     * @param {ActivitySyncUpdateArgs} args - Arguments to update one ActivitySync.
+     * @example
+     * // Update one ActivitySync
+     * const activitySync = await prisma.activitySync.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ActivitySyncUpdateArgs>(args: SelectSubset<T, ActivitySyncUpdateArgs<ExtArgs>>): Prisma__ActivitySyncClient<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ActivitySyncs.
+     * @param {ActivitySyncDeleteManyArgs} args - Arguments to filter ActivitySyncs to delete.
+     * @example
+     * // Delete a few ActivitySyncs
+     * const { count } = await prisma.activitySync.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ActivitySyncDeleteManyArgs>(args?: SelectSubset<T, ActivitySyncDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ActivitySyncs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivitySyncUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ActivitySyncs
+     * const activitySync = await prisma.activitySync.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ActivitySyncUpdateManyArgs>(args: SelectSubset<T, ActivitySyncUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ActivitySyncs and returns the data updated in the database.
+     * @param {ActivitySyncUpdateManyAndReturnArgs} args - Arguments to update many ActivitySyncs.
+     * @example
+     * // Update many ActivitySyncs
+     * const activitySync = await prisma.activitySync.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ActivitySyncs and only return the `id`
+     * const activitySyncWithIdOnly = await prisma.activitySync.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ActivitySyncUpdateManyAndReturnArgs>(args: SelectSubset<T, ActivitySyncUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ActivitySync.
+     * @param {ActivitySyncUpsertArgs} args - Arguments to update or create a ActivitySync.
+     * @example
+     * // Update or create a ActivitySync
+     * const activitySync = await prisma.activitySync.upsert({
+     *   create: {
+     *     // ... data to create a ActivitySync
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ActivitySync we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ActivitySyncUpsertArgs>(args: SelectSubset<T, ActivitySyncUpsertArgs<ExtArgs>>): Prisma__ActivitySyncClient<$Result.GetResult<Prisma.$ActivitySyncPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ActivitySyncs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivitySyncCountArgs} args - Arguments to filter ActivitySyncs to count.
+     * @example
+     * // Count the number of ActivitySyncs
+     * const count = await prisma.activitySync.count({
+     *   where: {
+     *     // ... the filter for the ActivitySyncs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ActivitySyncCountArgs>(
+      args?: Subset<T, ActivitySyncCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ActivitySyncCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ActivitySync.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivitySyncAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ActivitySyncAggregateArgs>(args: Subset<T, ActivitySyncAggregateArgs>): Prisma.PrismaPromise<GetActivitySyncAggregateType<T>>
+
+    /**
+     * Group by ActivitySync.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ActivitySyncGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ActivitySyncGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ActivitySyncGroupByArgs['orderBy'] }
+        : { orderBy?: ActivitySyncGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ActivitySyncGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetActivitySyncGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ActivitySync model
+   */
+  readonly fields: ActivitySyncFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ActivitySync.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ActivitySyncClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ActivitySync model
+   */
+  interface ActivitySyncFieldRefs {
+    readonly id: FieldRef<"ActivitySync", 'String'>
+    readonly userId: FieldRef<"ActivitySync", 'String'>
+    readonly syncedAt: FieldRef<"ActivitySync", 'DateTime'>
+    readonly activitiesCount: FieldRef<"ActivitySync", 'Int'>
+    readonly createdAt: FieldRef<"ActivitySync", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ActivitySync findUnique
+   */
+  export type ActivitySyncFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivitySync to fetch.
+     */
+    where: ActivitySyncWhereUniqueInput
+  }
+
+  /**
+   * ActivitySync findUniqueOrThrow
+   */
+  export type ActivitySyncFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivitySync to fetch.
+     */
+    where: ActivitySyncWhereUniqueInput
+  }
+
+  /**
+   * ActivitySync findFirst
+   */
+  export type ActivitySyncFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivitySync to fetch.
+     */
+    where?: ActivitySyncWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivitySyncs to fetch.
+     */
+    orderBy?: ActivitySyncOrderByWithRelationInput | ActivitySyncOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActivitySyncs.
+     */
+    cursor?: ActivitySyncWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivitySyncs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivitySyncs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActivitySyncs.
+     */
+    distinct?: ActivitySyncScalarFieldEnum | ActivitySyncScalarFieldEnum[]
+  }
+
+  /**
+   * ActivitySync findFirstOrThrow
+   */
+  export type ActivitySyncFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivitySync to fetch.
+     */
+    where?: ActivitySyncWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivitySyncs to fetch.
+     */
+    orderBy?: ActivitySyncOrderByWithRelationInput | ActivitySyncOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ActivitySyncs.
+     */
+    cursor?: ActivitySyncWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivitySyncs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivitySyncs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ActivitySyncs.
+     */
+    distinct?: ActivitySyncScalarFieldEnum | ActivitySyncScalarFieldEnum[]
+  }
+
+  /**
+   * ActivitySync findMany
+   */
+  export type ActivitySyncFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncInclude<ExtArgs> | null
+    /**
+     * Filter, which ActivitySyncs to fetch.
+     */
+    where?: ActivitySyncWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ActivitySyncs to fetch.
+     */
+    orderBy?: ActivitySyncOrderByWithRelationInput | ActivitySyncOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ActivitySyncs.
+     */
+    cursor?: ActivitySyncWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ActivitySyncs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ActivitySyncs.
+     */
+    skip?: number
+    distinct?: ActivitySyncScalarFieldEnum | ActivitySyncScalarFieldEnum[]
+  }
+
+  /**
+   * ActivitySync create
+   */
+  export type ActivitySyncCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ActivitySync.
+     */
+    data: XOR<ActivitySyncCreateInput, ActivitySyncUncheckedCreateInput>
+  }
+
+  /**
+   * ActivitySync createMany
+   */
+  export type ActivitySyncCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ActivitySyncs.
+     */
+    data: ActivitySyncCreateManyInput | ActivitySyncCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ActivitySync createManyAndReturn
+   */
+  export type ActivitySyncCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * The data used to create many ActivitySyncs.
+     */
+    data: ActivitySyncCreateManyInput | ActivitySyncCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ActivitySync update
+   */
+  export type ActivitySyncUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ActivitySync.
+     */
+    data: XOR<ActivitySyncUpdateInput, ActivitySyncUncheckedUpdateInput>
+    /**
+     * Choose, which ActivitySync to update.
+     */
+    where: ActivitySyncWhereUniqueInput
+  }
+
+  /**
+   * ActivitySync updateMany
+   */
+  export type ActivitySyncUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ActivitySyncs.
+     */
+    data: XOR<ActivitySyncUpdateManyMutationInput, ActivitySyncUncheckedUpdateManyInput>
+    /**
+     * Filter which ActivitySyncs to update
+     */
+    where?: ActivitySyncWhereInput
+    /**
+     * Limit how many ActivitySyncs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ActivitySync updateManyAndReturn
+   */
+  export type ActivitySyncUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * The data used to update ActivitySyncs.
+     */
+    data: XOR<ActivitySyncUpdateManyMutationInput, ActivitySyncUncheckedUpdateManyInput>
+    /**
+     * Filter which ActivitySyncs to update
+     */
+    where?: ActivitySyncWhereInput
+    /**
+     * Limit how many ActivitySyncs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ActivitySync upsert
+   */
+  export type ActivitySyncUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ActivitySync to update in case it exists.
+     */
+    where: ActivitySyncWhereUniqueInput
+    /**
+     * In case the ActivitySync found by the `where` argument doesn't exist, create a new ActivitySync with this data.
+     */
+    create: XOR<ActivitySyncCreateInput, ActivitySyncUncheckedCreateInput>
+    /**
+     * In case the ActivitySync was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ActivitySyncUpdateInput, ActivitySyncUncheckedUpdateInput>
+  }
+
+  /**
+   * ActivitySync delete
+   */
+  export type ActivitySyncDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncInclude<ExtArgs> | null
+    /**
+     * Filter which ActivitySync to delete.
+     */
+    where: ActivitySyncWhereUniqueInput
+  }
+
+  /**
+   * ActivitySync deleteMany
+   */
+  export type ActivitySyncDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ActivitySyncs to delete
+     */
+    where?: ActivitySyncWhereInput
+    /**
+     * Limit how many ActivitySyncs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ActivitySync without action
+   */
+  export type ActivitySyncDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ActivitySync
+     */
+    select?: ActivitySyncSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ActivitySync
+     */
+    omit?: ActivitySyncOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ActivitySyncInclude<ExtArgs> | null
   }
 
 
@@ -11031,7 +12323,7 @@ export namespace Prisma {
     userName: string | null
     userAvatar: string | null
     content: string | null
-    type: string | null
+    type: $Enums.ChatMessageType | null
     timestamp: Date | null
   }
 
@@ -11042,7 +12334,7 @@ export namespace Prisma {
     userName: string | null
     userAvatar: string | null
     content: string | null
-    type: string | null
+    type: $Enums.ChatMessageType | null
     timestamp: Date | null
   }
 
@@ -11172,7 +12464,7 @@ export namespace Prisma {
     userName: string
     userAvatar: string | null
     content: string
-    type: string
+    type: $Enums.ChatMessageType
     timestamp: Date
     _count: ChatMessageCountAggregateOutputType | null
     _min: ChatMessageMinAggregateOutputType | null
@@ -11270,7 +12562,7 @@ export namespace Prisma {
       userName: string
       userAvatar: string | null
       content: string
-      type: string
+      type: $Enums.ChatMessageType
       timestamp: Date
     }, ExtArgs["result"]["chatMessage"]>
     composites: {}
@@ -11703,7 +12995,7 @@ export namespace Prisma {
     readonly userName: FieldRef<"ChatMessage", 'String'>
     readonly userAvatar: FieldRef<"ChatMessage", 'String'>
     readonly content: FieldRef<"ChatMessage", 'String'>
-    readonly type: FieldRef<"ChatMessage", 'String'>
+    readonly type: FieldRef<"ChatMessage", 'ChatMessageType'>
     readonly timestamp: FieldRef<"ChatMessage", 'DateTime'>
   }
     
@@ -12160,8 +13452,10 @@ export namespace Prisma {
     name: 'name',
     description: 'description',
     distance: 'distance',
+    progress: 'progress',
     startDate: 'startDate',
     endDate: 'endDate',
+    status: 'status',
     imageUrl: 'imageUrl',
     userId: 'userId',
     createdAt: 'createdAt',
@@ -12228,16 +13522,26 @@ export namespace Prisma {
     stravaId: 'stravaId',
     name: 'name',
     distance: 'distance',
-    movingTime: 'movingTime',
-    elapsedTime: 'elapsedTime',
-    startDate: 'startDate',
+    date: 'date',
     type: 'type',
+    raceId: 'raceId',
     userId: 'userId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
   export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typeof ActivityScalarFieldEnum]
+
+
+  export const ActivitySyncScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    syncedAt: 'syncedAt',
+    activitiesCount: 'activitiesCount',
+    createdAt: 'createdAt'
+  };
+
+  export type ActivitySyncScalarFieldEnum = (typeof ActivitySyncScalarFieldEnum)[keyof typeof ActivitySyncScalarFieldEnum]
 
 
   export const ParticipationScalarFieldEnum: {
@@ -12386,6 +13690,20 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'ChatMessageType'
+   */
+  export type EnumChatMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChatMessageType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ChatMessageType[]'
+   */
+  export type ListEnumChatMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChatMessageType[]'>
+    
   /**
    * Deep Input Types
    */
@@ -12416,6 +13734,7 @@ export namespace Prisma {
     participations?: ParticipationListRelationFilter
     userRaces?: UserRaceListRelationFilter
     chatMessages?: ChatMessageListRelationFilter
+    activitySyncs?: ActivitySyncListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -12440,11 +13759,13 @@ export namespace Prisma {
     participations?: ParticipationOrderByRelationAggregateInput
     userRaces?: UserRaceOrderByRelationAggregateInput
     chatMessages?: ChatMessageOrderByRelationAggregateInput
+    activitySyncs?: ActivitySyncOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
+    stravaId?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -12456,7 +13777,6 @@ export namespace Prisma {
     emailVerified?: BoolFilter<"User"> | boolean
     verificationToken?: StringNullableFilter<"User"> | string | null
     verificationTokenExpiry?: DateTimeNullableFilter<"User"> | Date | string | null
-    stravaId?: StringNullableFilter<"User"> | string | null
     stravaAccessToken?: StringNullableFilter<"User"> | string | null
     stravaRefreshToken?: StringNullableFilter<"User"> | string | null
     stravaTokenExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -12467,7 +13787,8 @@ export namespace Prisma {
     participations?: ParticipationListRelationFilter
     userRaces?: UserRaceListRelationFilter
     chatMessages?: ChatMessageListRelationFilter
-  }, "id" | "email">
+    activitySyncs?: ActivitySyncListRelationFilter
+  }, "id" | "email" | "stravaId">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -12521,8 +13842,10 @@ export namespace Prisma {
     name?: StringFilter<"Race"> | string
     description?: StringNullableFilter<"Race"> | string | null
     distance?: FloatFilter<"Race"> | number
+    progress?: FloatFilter<"Race"> | number
     startDate?: DateTimeFilter<"Race"> | Date | string
     endDate?: DateTimeFilter<"Race"> | Date | string
+    status?: StringFilter<"Race"> | string
     imageUrl?: StringNullableFilter<"Race"> | string | null
     userId?: StringFilter<"Race"> | string
     createdAt?: DateTimeFilter<"Race"> | Date | string
@@ -12532,6 +13855,7 @@ export namespace Prisma {
     userRaces?: UserRaceListRelationFilter
     checkpoints?: CheckpointListRelationFilter
     chatMessages?: ChatMessageListRelationFilter
+    activities?: ActivityListRelationFilter
   }
 
   export type RaceOrderByWithRelationInput = {
@@ -12539,8 +13863,10 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrderInput | SortOrder
     distance?: SortOrder
+    progress?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
+    status?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -12550,6 +13876,7 @@ export namespace Prisma {
     userRaces?: UserRaceOrderByRelationAggregateInput
     checkpoints?: CheckpointOrderByRelationAggregateInput
     chatMessages?: ChatMessageOrderByRelationAggregateInput
+    activities?: ActivityOrderByRelationAggregateInput
   }
 
   export type RaceWhereUniqueInput = Prisma.AtLeast<{
@@ -12560,8 +13887,10 @@ export namespace Prisma {
     name?: StringFilter<"Race"> | string
     description?: StringNullableFilter<"Race"> | string | null
     distance?: FloatFilter<"Race"> | number
+    progress?: FloatFilter<"Race"> | number
     startDate?: DateTimeFilter<"Race"> | Date | string
     endDate?: DateTimeFilter<"Race"> | Date | string
+    status?: StringFilter<"Race"> | string
     imageUrl?: StringNullableFilter<"Race"> | string | null
     userId?: StringFilter<"Race"> | string
     createdAt?: DateTimeFilter<"Race"> | Date | string
@@ -12571,6 +13900,7 @@ export namespace Prisma {
     userRaces?: UserRaceListRelationFilter
     checkpoints?: CheckpointListRelationFilter
     chatMessages?: ChatMessageListRelationFilter
+    activities?: ActivityListRelationFilter
   }, "id">
 
   export type RaceOrderByWithAggregationInput = {
@@ -12578,8 +13908,10 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrderInput | SortOrder
     distance?: SortOrder
+    progress?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
+    status?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -12599,8 +13931,10 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Race"> | string
     description?: StringNullableWithAggregatesFilter<"Race"> | string | null
     distance?: FloatWithAggregatesFilter<"Race"> | number
+    progress?: FloatWithAggregatesFilter<"Race"> | number
     startDate?: DateTimeWithAggregatesFilter<"Race"> | Date | string
     endDate?: DateTimeWithAggregatesFilter<"Race"> | Date | string
+    status?: StringWithAggregatesFilter<"Race"> | string
     imageUrl?: StringNullableWithAggregatesFilter<"Race"> | string | null
     userId?: StringWithAggregatesFilter<"Race"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Race"> | Date | string
@@ -12886,13 +14220,13 @@ export namespace Prisma {
     stravaId?: StringFilter<"Activity"> | string
     name?: StringFilter<"Activity"> | string
     distance?: FloatFilter<"Activity"> | number
-    movingTime?: IntFilter<"Activity"> | number
-    elapsedTime?: IntFilter<"Activity"> | number
-    startDate?: DateTimeFilter<"Activity"> | Date | string
+    date?: DateTimeFilter<"Activity"> | Date | string
     type?: StringFilter<"Activity"> | string
+    raceId?: StringFilter<"Activity"> | string
     userId?: StringFilter<"Activity"> | string
     createdAt?: DateTimeFilter<"Activity"> | Date | string
     updatedAt?: DateTimeFilter<"Activity"> | Date | string
+    race?: XOR<RaceScalarRelationFilter, RaceWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -12901,13 +14235,13 @@ export namespace Prisma {
     stravaId?: SortOrder
     name?: SortOrder
     distance?: SortOrder
-    movingTime?: SortOrder
-    elapsedTime?: SortOrder
-    startDate?: SortOrder
+    date?: SortOrder
     type?: SortOrder
+    raceId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    race?: RaceOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
   }
 
@@ -12919,13 +14253,13 @@ export namespace Prisma {
     NOT?: ActivityWhereInput | ActivityWhereInput[]
     name?: StringFilter<"Activity"> | string
     distance?: FloatFilter<"Activity"> | number
-    movingTime?: IntFilter<"Activity"> | number
-    elapsedTime?: IntFilter<"Activity"> | number
-    startDate?: DateTimeFilter<"Activity"> | Date | string
+    date?: DateTimeFilter<"Activity"> | Date | string
     type?: StringFilter<"Activity"> | string
+    raceId?: StringFilter<"Activity"> | string
     userId?: StringFilter<"Activity"> | string
     createdAt?: DateTimeFilter<"Activity"> | Date | string
     updatedAt?: DateTimeFilter<"Activity"> | Date | string
+    race?: XOR<RaceScalarRelationFilter, RaceWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "stravaId">
 
@@ -12934,10 +14268,9 @@ export namespace Prisma {
     stravaId?: SortOrder
     name?: SortOrder
     distance?: SortOrder
-    movingTime?: SortOrder
-    elapsedTime?: SortOrder
-    startDate?: SortOrder
+    date?: SortOrder
     type?: SortOrder
+    raceId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -12956,13 +14289,69 @@ export namespace Prisma {
     stravaId?: StringWithAggregatesFilter<"Activity"> | string
     name?: StringWithAggregatesFilter<"Activity"> | string
     distance?: FloatWithAggregatesFilter<"Activity"> | number
-    movingTime?: IntWithAggregatesFilter<"Activity"> | number
-    elapsedTime?: IntWithAggregatesFilter<"Activity"> | number
-    startDate?: DateTimeWithAggregatesFilter<"Activity"> | Date | string
+    date?: DateTimeWithAggregatesFilter<"Activity"> | Date | string
     type?: StringWithAggregatesFilter<"Activity"> | string
+    raceId?: StringWithAggregatesFilter<"Activity"> | string
     userId?: StringWithAggregatesFilter<"Activity"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Activity"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Activity"> | Date | string
+  }
+
+  export type ActivitySyncWhereInput = {
+    AND?: ActivitySyncWhereInput | ActivitySyncWhereInput[]
+    OR?: ActivitySyncWhereInput[]
+    NOT?: ActivitySyncWhereInput | ActivitySyncWhereInput[]
+    id?: StringFilter<"ActivitySync"> | string
+    userId?: StringFilter<"ActivitySync"> | string
+    syncedAt?: DateTimeFilter<"ActivitySync"> | Date | string
+    activitiesCount?: IntFilter<"ActivitySync"> | number
+    createdAt?: DateTimeFilter<"ActivitySync"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ActivitySyncOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    syncedAt?: SortOrder
+    activitiesCount?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ActivitySyncWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ActivitySyncWhereInput | ActivitySyncWhereInput[]
+    OR?: ActivitySyncWhereInput[]
+    NOT?: ActivitySyncWhereInput | ActivitySyncWhereInput[]
+    userId?: StringFilter<"ActivitySync"> | string
+    syncedAt?: DateTimeFilter<"ActivitySync"> | Date | string
+    activitiesCount?: IntFilter<"ActivitySync"> | number
+    createdAt?: DateTimeFilter<"ActivitySync"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ActivitySyncOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    syncedAt?: SortOrder
+    activitiesCount?: SortOrder
+    createdAt?: SortOrder
+    _count?: ActivitySyncCountOrderByAggregateInput
+    _avg?: ActivitySyncAvgOrderByAggregateInput
+    _max?: ActivitySyncMaxOrderByAggregateInput
+    _min?: ActivitySyncMinOrderByAggregateInput
+    _sum?: ActivitySyncSumOrderByAggregateInput
+  }
+
+  export type ActivitySyncScalarWhereWithAggregatesInput = {
+    AND?: ActivitySyncScalarWhereWithAggregatesInput | ActivitySyncScalarWhereWithAggregatesInput[]
+    OR?: ActivitySyncScalarWhereWithAggregatesInput[]
+    NOT?: ActivitySyncScalarWhereWithAggregatesInput | ActivitySyncScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ActivitySync"> | string
+    userId?: StringWithAggregatesFilter<"ActivitySync"> | string
+    syncedAt?: DateTimeWithAggregatesFilter<"ActivitySync"> | Date | string
+    activitiesCount?: IntWithAggregatesFilter<"ActivitySync"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"ActivitySync"> | Date | string
   }
 
   export type ParticipationWhereInput = {
@@ -13039,7 +14428,7 @@ export namespace Prisma {
     userName?: StringFilter<"ChatMessage"> | string
     userAvatar?: StringNullableFilter<"ChatMessage"> | string | null
     content?: StringFilter<"ChatMessage"> | string
-    type?: StringFilter<"ChatMessage"> | string
+    type?: EnumChatMessageTypeFilter<"ChatMessage"> | $Enums.ChatMessageType
     timestamp?: DateTimeFilter<"ChatMessage"> | Date | string
     race?: XOR<RaceScalarRelationFilter, RaceWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13068,7 +14457,7 @@ export namespace Prisma {
     userName?: StringFilter<"ChatMessage"> | string
     userAvatar?: StringNullableFilter<"ChatMessage"> | string | null
     content?: StringFilter<"ChatMessage"> | string
-    type?: StringFilter<"ChatMessage"> | string
+    type?: EnumChatMessageTypeFilter<"ChatMessage"> | $Enums.ChatMessageType
     timestamp?: DateTimeFilter<"ChatMessage"> | Date | string
     race?: XOR<RaceScalarRelationFilter, RaceWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13098,7 +14487,7 @@ export namespace Prisma {
     userName?: StringWithAggregatesFilter<"ChatMessage"> | string
     userAvatar?: StringNullableWithAggregatesFilter<"ChatMessage"> | string | null
     content?: StringWithAggregatesFilter<"ChatMessage"> | string
-    type?: StringWithAggregatesFilter<"ChatMessage"> | string
+    type?: EnumChatMessageTypeWithAggregatesFilter<"ChatMessage"> | $Enums.ChatMessageType
     timestamp?: DateTimeWithAggregatesFilter<"ChatMessage"> | Date | string
   }
 
@@ -13124,6 +14513,7 @@ export namespace Prisma {
     participations?: ParticipationCreateNestedManyWithoutUserInput
     userRaces?: UserRaceCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -13148,6 +14538,7 @@ export namespace Prisma {
     participations?: ParticipationUncheckedCreateNestedManyWithoutUserInput
     userRaces?: UserRaceUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -13172,6 +14563,7 @@ export namespace Prisma {
     participations?: ParticipationUpdateManyWithoutUserNestedInput
     userRaces?: UserRaceUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -13196,6 +14588,7 @@ export namespace Prisma {
     participations?: ParticipationUncheckedUpdateManyWithoutUserNestedInput
     userRaces?: UserRaceUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -13260,8 +14653,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13270,6 +14665,7 @@ export namespace Prisma {
     userRaces?: UserRaceCreateNestedManyWithoutRaceInput
     checkpoints?: CheckpointCreateNestedManyWithoutRaceInput
     chatMessages?: ChatMessageCreateNestedManyWithoutRaceInput
+    activities?: ActivityCreateNestedManyWithoutRaceInput
   }
 
   export type RaceUncheckedCreateInput = {
@@ -13277,8 +14673,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     userId: string
     createdAt?: Date | string
@@ -13287,6 +14685,7 @@ export namespace Prisma {
     userRaces?: UserRaceUncheckedCreateNestedManyWithoutRaceInput
     checkpoints?: CheckpointUncheckedCreateNestedManyWithoutRaceInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutRaceInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutRaceInput
   }
 
   export type RaceUpdateInput = {
@@ -13294,8 +14693,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13304,6 +14705,7 @@ export namespace Prisma {
     userRaces?: UserRaceUpdateManyWithoutRaceNestedInput
     checkpoints?: CheckpointUpdateManyWithoutRaceNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUpdateManyWithoutRaceNestedInput
   }
 
   export type RaceUncheckedUpdateInput = {
@@ -13311,8 +14713,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13321,6 +14725,7 @@ export namespace Prisma {
     userRaces?: UserRaceUncheckedUpdateManyWithoutRaceNestedInput
     checkpoints?: CheckpointUncheckedUpdateManyWithoutRaceNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutRaceNestedInput
   }
 
   export type RaceCreateManyInput = {
@@ -13328,8 +14733,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     userId: string
     createdAt?: Date | string
@@ -13341,8 +14748,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13353,8 +14762,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13646,12 +15057,11 @@ export namespace Prisma {
     stravaId: string
     name: string
     distance: number
-    movingTime: number
-    elapsedTime: number
-    startDate: Date | string
+    date: Date | string
     type: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    race: RaceCreateNestedOneWithoutActivitiesInput
     user: UserCreateNestedOneWithoutActivitiesInput
   }
 
@@ -13660,10 +15070,9 @@ export namespace Prisma {
     stravaId: string
     name: string
     distance: number
-    movingTime: number
-    elapsedTime: number
-    startDate: Date | string
+    date: Date | string
     type: string
+    raceId: string
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13674,12 +15083,11 @@ export namespace Prisma {
     stravaId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     distance?: FloatFieldUpdateOperationsInput | number
-    movingTime?: IntFieldUpdateOperationsInput | number
-    elapsedTime?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    race?: RaceUpdateOneRequiredWithoutActivitiesNestedInput
     user?: UserUpdateOneRequiredWithoutActivitiesNestedInput
   }
 
@@ -13688,10 +15096,9 @@ export namespace Prisma {
     stravaId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     distance?: FloatFieldUpdateOperationsInput | number
-    movingTime?: IntFieldUpdateOperationsInput | number
-    elapsedTime?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: StringFieldUpdateOperationsInput | string
+    raceId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13702,10 +15109,9 @@ export namespace Prisma {
     stravaId: string
     name: string
     distance: number
-    movingTime: number
-    elapsedTime: number
-    startDate: Date | string
+    date: Date | string
     type: string
+    raceId: string
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13716,9 +15122,7 @@ export namespace Prisma {
     stravaId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     distance?: FloatFieldUpdateOperationsInput | number
-    movingTime?: IntFieldUpdateOperationsInput | number
-    elapsedTime?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13729,13 +15133,67 @@ export namespace Prisma {
     stravaId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     distance?: FloatFieldUpdateOperationsInput | number
-    movingTime?: IntFieldUpdateOperationsInput | number
-    elapsedTime?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: StringFieldUpdateOperationsInput | string
+    raceId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivitySyncCreateInput = {
+    id?: string
+    syncedAt: Date | string
+    activitiesCount: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutActivitySyncsInput
+  }
+
+  export type ActivitySyncUncheckedCreateInput = {
+    id?: string
+    userId: string
+    syncedAt: Date | string
+    activitiesCount: number
+    createdAt?: Date | string
+  }
+
+  export type ActivitySyncUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activitiesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutActivitySyncsNestedInput
+  }
+
+  export type ActivitySyncUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activitiesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivitySyncCreateManyInput = {
+    id?: string
+    userId: string
+    syncedAt: Date | string
+    activitiesCount: number
+    createdAt?: Date | string
+  }
+
+  export type ActivitySyncUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activitiesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivitySyncUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activitiesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ParticipationCreateInput = {
@@ -13804,7 +15262,7 @@ export namespace Prisma {
     userName: string
     userAvatar?: string | null
     content: string
-    type?: string
+    type?: $Enums.ChatMessageType
     timestamp?: Date | string
     race: RaceCreateNestedOneWithoutChatMessagesInput
     user: UserCreateNestedOneWithoutChatMessagesInput
@@ -13817,7 +15275,7 @@ export namespace Prisma {
     userName: string
     userAvatar?: string | null
     content: string
-    type?: string
+    type?: $Enums.ChatMessageType
     timestamp?: Date | string
   }
 
@@ -13826,7 +15284,7 @@ export namespace Prisma {
     userName?: StringFieldUpdateOperationsInput | string
     userAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumChatMessageTypeFieldUpdateOperationsInput | $Enums.ChatMessageType
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     race?: RaceUpdateOneRequiredWithoutChatMessagesNestedInput
     user?: UserUpdateOneRequiredWithoutChatMessagesNestedInput
@@ -13839,7 +15297,7 @@ export namespace Prisma {
     userName?: StringFieldUpdateOperationsInput | string
     userAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumChatMessageTypeFieldUpdateOperationsInput | $Enums.ChatMessageType
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -13850,7 +15308,7 @@ export namespace Prisma {
     userName: string
     userAvatar?: string | null
     content: string
-    type?: string
+    type?: $Enums.ChatMessageType
     timestamp?: Date | string
   }
 
@@ -13859,7 +15317,7 @@ export namespace Prisma {
     userName?: StringFieldUpdateOperationsInput | string
     userAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumChatMessageTypeFieldUpdateOperationsInput | $Enums.ChatMessageType
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -13870,7 +15328,7 @@ export namespace Prisma {
     userName?: StringFieldUpdateOperationsInput | string
     userAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumChatMessageTypeFieldUpdateOperationsInput | $Enums.ChatMessageType
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -13961,6 +15419,12 @@ export namespace Prisma {
     none?: ChatMessageWhereInput
   }
 
+  export type ActivitySyncListRelationFilter = {
+    every?: ActivitySyncWhereInput
+    some?: ActivitySyncWhereInput
+    none?: ActivitySyncWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -13983,6 +15447,10 @@ export namespace Prisma {
   }
 
   export type ChatMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ActivitySyncOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14146,8 +15614,10 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     distance?: SortOrder
+    progress?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
+    status?: SortOrder
     imageUrl?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -14156,6 +15626,7 @@ export namespace Prisma {
 
   export type RaceAvgOrderByAggregateInput = {
     distance?: SortOrder
+    progress?: SortOrder
   }
 
   export type RaceMaxOrderByAggregateInput = {
@@ -14163,8 +15634,10 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     distance?: SortOrder
+    progress?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
+    status?: SortOrder
     imageUrl?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -14176,8 +15649,10 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     distance?: SortOrder
+    progress?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
+    status?: SortOrder
     imageUrl?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
@@ -14186,6 +15661,7 @@ export namespace Prisma {
 
   export type RaceSumOrderByAggregateInput = {
     distance?: SortOrder
+    progress?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -14425,6 +15901,53 @@ export namespace Prisma {
     milestone?: SortOrder
   }
 
+  export type ActivityCountOrderByAggregateInput = {
+    id?: SortOrder
+    stravaId?: SortOrder
+    name?: SortOrder
+    distance?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    raceId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActivityAvgOrderByAggregateInput = {
+    distance?: SortOrder
+  }
+
+  export type ActivityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    stravaId?: SortOrder
+    name?: SortOrder
+    distance?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    raceId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActivityMinOrderByAggregateInput = {
+    id?: SortOrder
+    stravaId?: SortOrder
+    name?: SortOrder
+    distance?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    raceId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ActivitySumOrderByAggregateInput = {
+    distance?: SortOrder
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -14436,58 +15959,36 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type ActivityCountOrderByAggregateInput = {
+  export type ActivitySyncCountOrderByAggregateInput = {
     id?: SortOrder
-    stravaId?: SortOrder
-    name?: SortOrder
-    distance?: SortOrder
-    movingTime?: SortOrder
-    elapsedTime?: SortOrder
-    startDate?: SortOrder
-    type?: SortOrder
     userId?: SortOrder
+    syncedAt?: SortOrder
+    activitiesCount?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type ActivityAvgOrderByAggregateInput = {
-    distance?: SortOrder
-    movingTime?: SortOrder
-    elapsedTime?: SortOrder
+  export type ActivitySyncAvgOrderByAggregateInput = {
+    activitiesCount?: SortOrder
   }
 
-  export type ActivityMaxOrderByAggregateInput = {
+  export type ActivitySyncMaxOrderByAggregateInput = {
     id?: SortOrder
-    stravaId?: SortOrder
-    name?: SortOrder
-    distance?: SortOrder
-    movingTime?: SortOrder
-    elapsedTime?: SortOrder
-    startDate?: SortOrder
-    type?: SortOrder
     userId?: SortOrder
+    syncedAt?: SortOrder
+    activitiesCount?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type ActivityMinOrderByAggregateInput = {
+  export type ActivitySyncMinOrderByAggregateInput = {
     id?: SortOrder
-    stravaId?: SortOrder
-    name?: SortOrder
-    distance?: SortOrder
-    movingTime?: SortOrder
-    elapsedTime?: SortOrder
-    startDate?: SortOrder
-    type?: SortOrder
     userId?: SortOrder
+    syncedAt?: SortOrder
+    activitiesCount?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
   }
 
-  export type ActivitySumOrderByAggregateInput = {
-    distance?: SortOrder
-    movingTime?: SortOrder
-    elapsedTime?: SortOrder
+  export type ActivitySyncSumOrderByAggregateInput = {
+    activitiesCount?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -14538,6 +16039,13 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type EnumChatMessageTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChatMessageType | EnumChatMessageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ChatMessageType[] | ListEnumChatMessageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChatMessageType[] | ListEnumChatMessageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumChatMessageTypeFilter<$PrismaModel> | $Enums.ChatMessageType
+  }
+
   export type ChatMessageCountOrderByAggregateInput = {
     id?: SortOrder
     raceId?: SortOrder
@@ -14569,6 +16077,16 @@ export namespace Prisma {
     content?: SortOrder
     type?: SortOrder
     timestamp?: SortOrder
+  }
+
+  export type EnumChatMessageTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChatMessageType | EnumChatMessageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ChatMessageType[] | ListEnumChatMessageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChatMessageType[] | ListEnumChatMessageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumChatMessageTypeWithAggregatesFilter<$PrismaModel> | $Enums.ChatMessageType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChatMessageTypeFilter<$PrismaModel>
+    _max?: NestedEnumChatMessageTypeFilter<$PrismaModel>
   }
 
   export type ActivityCreateNestedManyWithoutUserInput = {
@@ -14606,6 +16124,13 @@ export namespace Prisma {
     connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[]
   }
 
+  export type ActivitySyncCreateNestedManyWithoutUserInput = {
+    create?: XOR<ActivitySyncCreateWithoutUserInput, ActivitySyncUncheckedCreateWithoutUserInput> | ActivitySyncCreateWithoutUserInput[] | ActivitySyncUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivitySyncCreateOrConnectWithoutUserInput | ActivitySyncCreateOrConnectWithoutUserInput[]
+    createMany?: ActivitySyncCreateManyUserInputEnvelope
+    connect?: ActivitySyncWhereUniqueInput | ActivitySyncWhereUniqueInput[]
+  }
+
   export type ActivityUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ActivityCreateWithoutUserInput, ActivityUncheckedCreateWithoutUserInput> | ActivityCreateWithoutUserInput[] | ActivityUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ActivityCreateOrConnectWithoutUserInput | ActivityCreateOrConnectWithoutUserInput[]
@@ -14639,6 +16164,13 @@ export namespace Prisma {
     connectOrCreate?: ChatMessageCreateOrConnectWithoutUserInput | ChatMessageCreateOrConnectWithoutUserInput[]
     createMany?: ChatMessageCreateManyUserInputEnvelope
     connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[]
+  }
+
+  export type ActivitySyncUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ActivitySyncCreateWithoutUserInput, ActivitySyncUncheckedCreateWithoutUserInput> | ActivitySyncCreateWithoutUserInput[] | ActivitySyncUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivitySyncCreateOrConnectWithoutUserInput | ActivitySyncCreateOrConnectWithoutUserInput[]
+    createMany?: ActivitySyncCreateManyUserInputEnvelope
+    connect?: ActivitySyncWhereUniqueInput | ActivitySyncWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -14731,6 +16263,20 @@ export namespace Prisma {
     deleteMany?: ChatMessageScalarWhereInput | ChatMessageScalarWhereInput[]
   }
 
+  export type ActivitySyncUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ActivitySyncCreateWithoutUserInput, ActivitySyncUncheckedCreateWithoutUserInput> | ActivitySyncCreateWithoutUserInput[] | ActivitySyncUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivitySyncCreateOrConnectWithoutUserInput | ActivitySyncCreateOrConnectWithoutUserInput[]
+    upsert?: ActivitySyncUpsertWithWhereUniqueWithoutUserInput | ActivitySyncUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ActivitySyncCreateManyUserInputEnvelope
+    set?: ActivitySyncWhereUniqueInput | ActivitySyncWhereUniqueInput[]
+    disconnect?: ActivitySyncWhereUniqueInput | ActivitySyncWhereUniqueInput[]
+    delete?: ActivitySyncWhereUniqueInput | ActivitySyncWhereUniqueInput[]
+    connect?: ActivitySyncWhereUniqueInput | ActivitySyncWhereUniqueInput[]
+    update?: ActivitySyncUpdateWithWhereUniqueWithoutUserInput | ActivitySyncUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ActivitySyncUpdateManyWithWhereWithoutUserInput | ActivitySyncUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ActivitySyncScalarWhereInput | ActivitySyncScalarWhereInput[]
+  }
+
   export type ActivityUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<ActivityCreateWithoutUserInput, ActivityUncheckedCreateWithoutUserInput> | ActivityCreateWithoutUserInput[] | ActivityUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ActivityCreateOrConnectWithoutUserInput | ActivityCreateOrConnectWithoutUserInput[]
@@ -14801,6 +16347,20 @@ export namespace Prisma {
     deleteMany?: ChatMessageScalarWhereInput | ChatMessageScalarWhereInput[]
   }
 
+  export type ActivitySyncUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ActivitySyncCreateWithoutUserInput, ActivitySyncUncheckedCreateWithoutUserInput> | ActivitySyncCreateWithoutUserInput[] | ActivitySyncUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ActivitySyncCreateOrConnectWithoutUserInput | ActivitySyncCreateOrConnectWithoutUserInput[]
+    upsert?: ActivitySyncUpsertWithWhereUniqueWithoutUserInput | ActivitySyncUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ActivitySyncCreateManyUserInputEnvelope
+    set?: ActivitySyncWhereUniqueInput | ActivitySyncWhereUniqueInput[]
+    disconnect?: ActivitySyncWhereUniqueInput | ActivitySyncWhereUniqueInput[]
+    delete?: ActivitySyncWhereUniqueInput | ActivitySyncWhereUniqueInput[]
+    connect?: ActivitySyncWhereUniqueInput | ActivitySyncWhereUniqueInput[]
+    update?: ActivitySyncUpdateWithWhereUniqueWithoutUserInput | ActivitySyncUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ActivitySyncUpdateManyWithWhereWithoutUserInput | ActivitySyncUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ActivitySyncScalarWhereInput | ActivitySyncScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutRacesInput = {
     create?: XOR<UserCreateWithoutRacesInput, UserUncheckedCreateWithoutRacesInput>
     connectOrCreate?: UserCreateOrConnectWithoutRacesInput
@@ -14835,6 +16395,13 @@ export namespace Prisma {
     connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[]
   }
 
+  export type ActivityCreateNestedManyWithoutRaceInput = {
+    create?: XOR<ActivityCreateWithoutRaceInput, ActivityUncheckedCreateWithoutRaceInput> | ActivityCreateWithoutRaceInput[] | ActivityUncheckedCreateWithoutRaceInput[]
+    connectOrCreate?: ActivityCreateOrConnectWithoutRaceInput | ActivityCreateOrConnectWithoutRaceInput[]
+    createMany?: ActivityCreateManyRaceInputEnvelope
+    connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+  }
+
   export type ParticipationUncheckedCreateNestedManyWithoutRaceInput = {
     create?: XOR<ParticipationCreateWithoutRaceInput, ParticipationUncheckedCreateWithoutRaceInput> | ParticipationCreateWithoutRaceInput[] | ParticipationUncheckedCreateWithoutRaceInput[]
     connectOrCreate?: ParticipationCreateOrConnectWithoutRaceInput | ParticipationCreateOrConnectWithoutRaceInput[]
@@ -14861,6 +16428,13 @@ export namespace Prisma {
     connectOrCreate?: ChatMessageCreateOrConnectWithoutRaceInput | ChatMessageCreateOrConnectWithoutRaceInput[]
     createMany?: ChatMessageCreateManyRaceInputEnvelope
     connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[]
+  }
+
+  export type ActivityUncheckedCreateNestedManyWithoutRaceInput = {
+    create?: XOR<ActivityCreateWithoutRaceInput, ActivityUncheckedCreateWithoutRaceInput> | ActivityCreateWithoutRaceInput[] | ActivityUncheckedCreateWithoutRaceInput[]
+    connectOrCreate?: ActivityCreateOrConnectWithoutRaceInput | ActivityCreateOrConnectWithoutRaceInput[]
+    createMany?: ActivityCreateManyRaceInputEnvelope
+    connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -14935,6 +16509,20 @@ export namespace Prisma {
     deleteMany?: ChatMessageScalarWhereInput | ChatMessageScalarWhereInput[]
   }
 
+  export type ActivityUpdateManyWithoutRaceNestedInput = {
+    create?: XOR<ActivityCreateWithoutRaceInput, ActivityUncheckedCreateWithoutRaceInput> | ActivityCreateWithoutRaceInput[] | ActivityUncheckedCreateWithoutRaceInput[]
+    connectOrCreate?: ActivityCreateOrConnectWithoutRaceInput | ActivityCreateOrConnectWithoutRaceInput[]
+    upsert?: ActivityUpsertWithWhereUniqueWithoutRaceInput | ActivityUpsertWithWhereUniqueWithoutRaceInput[]
+    createMany?: ActivityCreateManyRaceInputEnvelope
+    set?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    disconnect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    delete?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    update?: ActivityUpdateWithWhereUniqueWithoutRaceInput | ActivityUpdateWithWhereUniqueWithoutRaceInput[]
+    updateMany?: ActivityUpdateManyWithWhereWithoutRaceInput | ActivityUpdateManyWithWhereWithoutRaceInput[]
+    deleteMany?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
+  }
+
   export type ParticipationUncheckedUpdateManyWithoutRaceNestedInput = {
     create?: XOR<ParticipationCreateWithoutRaceInput, ParticipationUncheckedCreateWithoutRaceInput> | ParticipationCreateWithoutRaceInput[] | ParticipationUncheckedCreateWithoutRaceInput[]
     connectOrCreate?: ParticipationCreateOrConnectWithoutRaceInput | ParticipationCreateOrConnectWithoutRaceInput[]
@@ -14989,6 +16577,20 @@ export namespace Prisma {
     update?: ChatMessageUpdateWithWhereUniqueWithoutRaceInput | ChatMessageUpdateWithWhereUniqueWithoutRaceInput[]
     updateMany?: ChatMessageUpdateManyWithWhereWithoutRaceInput | ChatMessageUpdateManyWithWhereWithoutRaceInput[]
     deleteMany?: ChatMessageScalarWhereInput | ChatMessageScalarWhereInput[]
+  }
+
+  export type ActivityUncheckedUpdateManyWithoutRaceNestedInput = {
+    create?: XOR<ActivityCreateWithoutRaceInput, ActivityUncheckedCreateWithoutRaceInput> | ActivityCreateWithoutRaceInput[] | ActivityUncheckedCreateWithoutRaceInput[]
+    connectOrCreate?: ActivityCreateOrConnectWithoutRaceInput | ActivityCreateOrConnectWithoutRaceInput[]
+    upsert?: ActivityUpsertWithWhereUniqueWithoutRaceInput | ActivityUpsertWithWhereUniqueWithoutRaceInput[]
+    createMany?: ActivityCreateManyRaceInputEnvelope
+    set?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    disconnect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    delete?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    connect?: ActivityWhereUniqueInput | ActivityWhereUniqueInput[]
+    update?: ActivityUpdateWithWhereUniqueWithoutRaceInput | ActivityUpdateWithWhereUniqueWithoutRaceInput[]
+    updateMany?: ActivityUpdateManyWithWhereWithoutRaceInput | ActivityUpdateManyWithWhereWithoutRaceInput[]
+    deleteMany?: ActivityScalarWhereInput | ActivityScalarWhereInput[]
   }
 
   export type CheerCreateNestedManyWithoutUserRaceInput = {
@@ -15089,9 +16691,37 @@ export namespace Prisma {
     update?: XOR<XOR<UserRaceUpdateToOneWithWhereWithoutCheersInput, UserRaceUpdateWithoutCheersInput>, UserRaceUncheckedUpdateWithoutCheersInput>
   }
 
+  export type RaceCreateNestedOneWithoutActivitiesInput = {
+    create?: XOR<RaceCreateWithoutActivitiesInput, RaceUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: RaceCreateOrConnectWithoutActivitiesInput
+    connect?: RaceWhereUniqueInput
+  }
+
   export type UserCreateNestedOneWithoutActivitiesInput = {
     create?: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
     connectOrCreate?: UserCreateOrConnectWithoutActivitiesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type RaceUpdateOneRequiredWithoutActivitiesNestedInput = {
+    create?: XOR<RaceCreateWithoutActivitiesInput, RaceUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: RaceCreateOrConnectWithoutActivitiesInput
+    upsert?: RaceUpsertWithoutActivitiesInput
+    connect?: RaceWhereUniqueInput
+    update?: XOR<XOR<RaceUpdateToOneWithWhereWithoutActivitiesInput, RaceUpdateWithoutActivitiesInput>, RaceUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutActivitiesNestedInput = {
+    create?: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActivitiesInput
+    upsert?: UserUpsertWithoutActivitiesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutActivitiesInput, UserUpdateWithoutActivitiesInput>, UserUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type UserCreateNestedOneWithoutActivitySyncsInput = {
+    create?: XOR<UserCreateWithoutActivitySyncsInput, UserUncheckedCreateWithoutActivitySyncsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActivitySyncsInput
     connect?: UserWhereUniqueInput
   }
 
@@ -15103,12 +16733,12 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type UserUpdateOneRequiredWithoutActivitiesNestedInput = {
-    create?: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutActivitiesInput
-    upsert?: UserUpsertWithoutActivitiesInput
+  export type UserUpdateOneRequiredWithoutActivitySyncsNestedInput = {
+    create?: XOR<UserCreateWithoutActivitySyncsInput, UserUncheckedCreateWithoutActivitySyncsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActivitySyncsInput
+    upsert?: UserUpsertWithoutActivitySyncsInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutActivitiesInput, UserUpdateWithoutActivitiesInput>, UserUncheckedUpdateWithoutActivitiesInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutActivitySyncsInput, UserUpdateWithoutActivitySyncsInput>, UserUncheckedUpdateWithoutActivitySyncsInput>
   }
 
   export type UserCreateNestedOneWithoutParticipationsInput = {
@@ -15149,6 +16779,10 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutChatMessagesInput, UserUncheckedCreateWithoutChatMessagesInput>
     connectOrCreate?: UserCreateOrConnectWithoutChatMessagesInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type EnumChatMessageTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ChatMessageType
   }
 
   export type RaceUpdateOneRequiredWithoutChatMessagesNestedInput = {
@@ -15380,17 +17014,33 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type NestedEnumChatMessageTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChatMessageType | EnumChatMessageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ChatMessageType[] | ListEnumChatMessageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChatMessageType[] | ListEnumChatMessageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumChatMessageTypeFilter<$PrismaModel> | $Enums.ChatMessageType
+  }
+
+  export type NestedEnumChatMessageTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ChatMessageType | EnumChatMessageTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ChatMessageType[] | ListEnumChatMessageTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ChatMessageType[] | ListEnumChatMessageTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumChatMessageTypeWithAggregatesFilter<$PrismaModel> | $Enums.ChatMessageType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumChatMessageTypeFilter<$PrismaModel>
+    _max?: NestedEnumChatMessageTypeFilter<$PrismaModel>
+  }
+
   export type ActivityCreateWithoutUserInput = {
     id?: string
     stravaId: string
     name: string
     distance: number
-    movingTime: number
-    elapsedTime: number
-    startDate: Date | string
+    date: Date | string
     type: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    race: RaceCreateNestedOneWithoutActivitiesInput
   }
 
   export type ActivityUncheckedCreateWithoutUserInput = {
@@ -15398,10 +17048,9 @@ export namespace Prisma {
     stravaId: string
     name: string
     distance: number
-    movingTime: number
-    elapsedTime: number
-    startDate: Date | string
+    date: Date | string
     type: string
+    raceId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -15421,8 +17070,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15430,6 +17081,7 @@ export namespace Prisma {
     userRaces?: UserRaceCreateNestedManyWithoutRaceInput
     checkpoints?: CheckpointCreateNestedManyWithoutRaceInput
     chatMessages?: ChatMessageCreateNestedManyWithoutRaceInput
+    activities?: ActivityCreateNestedManyWithoutRaceInput
   }
 
   export type RaceUncheckedCreateWithoutUserInput = {
@@ -15437,8 +17089,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15446,6 +17100,7 @@ export namespace Prisma {
     userRaces?: UserRaceUncheckedCreateNestedManyWithoutRaceInput
     checkpoints?: CheckpointUncheckedCreateNestedManyWithoutRaceInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutRaceInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutRaceInput
   }
 
   export type RaceCreateOrConnectWithoutUserInput = {
@@ -15519,7 +17174,7 @@ export namespace Prisma {
     userName: string
     userAvatar?: string | null
     content: string
-    type?: string
+    type?: $Enums.ChatMessageType
     timestamp?: Date | string
     race: RaceCreateNestedOneWithoutChatMessagesInput
   }
@@ -15530,7 +17185,7 @@ export namespace Prisma {
     userName: string
     userAvatar?: string | null
     content: string
-    type?: string
+    type?: $Enums.ChatMessageType
     timestamp?: Date | string
   }
 
@@ -15541,6 +17196,30 @@ export namespace Prisma {
 
   export type ChatMessageCreateManyUserInputEnvelope = {
     data: ChatMessageCreateManyUserInput | ChatMessageCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ActivitySyncCreateWithoutUserInput = {
+    id?: string
+    syncedAt: Date | string
+    activitiesCount: number
+    createdAt?: Date | string
+  }
+
+  export type ActivitySyncUncheckedCreateWithoutUserInput = {
+    id?: string
+    syncedAt: Date | string
+    activitiesCount: number
+    createdAt?: Date | string
+  }
+
+  export type ActivitySyncCreateOrConnectWithoutUserInput = {
+    where: ActivitySyncWhereUniqueInput
+    create: XOR<ActivitySyncCreateWithoutUserInput, ActivitySyncUncheckedCreateWithoutUserInput>
+  }
+
+  export type ActivitySyncCreateManyUserInputEnvelope = {
+    data: ActivitySyncCreateManyUserInput | ActivitySyncCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -15568,10 +17247,9 @@ export namespace Prisma {
     stravaId?: StringFilter<"Activity"> | string
     name?: StringFilter<"Activity"> | string
     distance?: FloatFilter<"Activity"> | number
-    movingTime?: IntFilter<"Activity"> | number
-    elapsedTime?: IntFilter<"Activity"> | number
-    startDate?: DateTimeFilter<"Activity"> | Date | string
+    date?: DateTimeFilter<"Activity"> | Date | string
     type?: StringFilter<"Activity"> | string
+    raceId?: StringFilter<"Activity"> | string
     userId?: StringFilter<"Activity"> | string
     createdAt?: DateTimeFilter<"Activity"> | Date | string
     updatedAt?: DateTimeFilter<"Activity"> | Date | string
@@ -15601,8 +17279,10 @@ export namespace Prisma {
     name?: StringFilter<"Race"> | string
     description?: StringNullableFilter<"Race"> | string | null
     distance?: FloatFilter<"Race"> | number
+    progress?: FloatFilter<"Race"> | number
     startDate?: DateTimeFilter<"Race"> | Date | string
     endDate?: DateTimeFilter<"Race"> | Date | string
+    status?: StringFilter<"Race"> | string
     imageUrl?: StringNullableFilter<"Race"> | string | null
     userId?: StringFilter<"Race"> | string
     createdAt?: DateTimeFilter<"Race"> | Date | string
@@ -15692,8 +17372,35 @@ export namespace Prisma {
     userName?: StringFilter<"ChatMessage"> | string
     userAvatar?: StringNullableFilter<"ChatMessage"> | string | null
     content?: StringFilter<"ChatMessage"> | string
-    type?: StringFilter<"ChatMessage"> | string
+    type?: EnumChatMessageTypeFilter<"ChatMessage"> | $Enums.ChatMessageType
     timestamp?: DateTimeFilter<"ChatMessage"> | Date | string
+  }
+
+  export type ActivitySyncUpsertWithWhereUniqueWithoutUserInput = {
+    where: ActivitySyncWhereUniqueInput
+    update: XOR<ActivitySyncUpdateWithoutUserInput, ActivitySyncUncheckedUpdateWithoutUserInput>
+    create: XOR<ActivitySyncCreateWithoutUserInput, ActivitySyncUncheckedCreateWithoutUserInput>
+  }
+
+  export type ActivitySyncUpdateWithWhereUniqueWithoutUserInput = {
+    where: ActivitySyncWhereUniqueInput
+    data: XOR<ActivitySyncUpdateWithoutUserInput, ActivitySyncUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ActivitySyncUpdateManyWithWhereWithoutUserInput = {
+    where: ActivitySyncScalarWhereInput
+    data: XOR<ActivitySyncUpdateManyMutationInput, ActivitySyncUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ActivitySyncScalarWhereInput = {
+    AND?: ActivitySyncScalarWhereInput | ActivitySyncScalarWhereInput[]
+    OR?: ActivitySyncScalarWhereInput[]
+    NOT?: ActivitySyncScalarWhereInput | ActivitySyncScalarWhereInput[]
+    id?: StringFilter<"ActivitySync"> | string
+    userId?: StringFilter<"ActivitySync"> | string
+    syncedAt?: DateTimeFilter<"ActivitySync"> | Date | string
+    activitiesCount?: IntFilter<"ActivitySync"> | number
+    createdAt?: DateTimeFilter<"ActivitySync"> | Date | string
   }
 
   export type UserCreateWithoutRacesInput = {
@@ -15717,6 +17424,7 @@ export namespace Prisma {
     participations?: ParticipationCreateNestedManyWithoutUserInput
     userRaces?: UserRaceCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRacesInput = {
@@ -15740,6 +17448,7 @@ export namespace Prisma {
     participations?: ParticipationUncheckedCreateNestedManyWithoutUserInput
     userRaces?: UserRaceUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRacesInput = {
@@ -15838,7 +17547,7 @@ export namespace Prisma {
     userName: string
     userAvatar?: string | null
     content: string
-    type?: string
+    type?: $Enums.ChatMessageType
     timestamp?: Date | string
     user: UserCreateNestedOneWithoutChatMessagesInput
   }
@@ -15849,7 +17558,7 @@ export namespace Prisma {
     userName: string
     userAvatar?: string | null
     content: string
-    type?: string
+    type?: $Enums.ChatMessageType
     timestamp?: Date | string
   }
 
@@ -15860,6 +17569,40 @@ export namespace Prisma {
 
   export type ChatMessageCreateManyRaceInputEnvelope = {
     data: ChatMessageCreateManyRaceInput | ChatMessageCreateManyRaceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ActivityCreateWithoutRaceInput = {
+    id?: string
+    stravaId: string
+    name: string
+    distance: number
+    date: Date | string
+    type: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutActivitiesInput
+  }
+
+  export type ActivityUncheckedCreateWithoutRaceInput = {
+    id?: string
+    stravaId: string
+    name: string
+    distance: number
+    date: Date | string
+    type: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ActivityCreateOrConnectWithoutRaceInput = {
+    where: ActivityWhereUniqueInput
+    create: XOR<ActivityCreateWithoutRaceInput, ActivityUncheckedCreateWithoutRaceInput>
+  }
+
+  export type ActivityCreateManyRaceInputEnvelope = {
+    data: ActivityCreateManyRaceInput | ActivityCreateManyRaceInput[]
     skipDuplicates?: boolean
   }
 
@@ -15895,6 +17638,7 @@ export namespace Prisma {
     participations?: ParticipationUpdateManyWithoutUserNestedInput
     userRaces?: UserRaceUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRacesInput = {
@@ -15918,6 +17662,7 @@ export namespace Prisma {
     participations?: ParticipationUncheckedUpdateManyWithoutUserNestedInput
     userRaces?: UserRaceUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ParticipationUpsertWithWhereUniqueWithoutRaceInput = {
@@ -15998,6 +17743,22 @@ export namespace Prisma {
     data: XOR<ChatMessageUpdateManyMutationInput, ChatMessageUncheckedUpdateManyWithoutRaceInput>
   }
 
+  export type ActivityUpsertWithWhereUniqueWithoutRaceInput = {
+    where: ActivityWhereUniqueInput
+    update: XOR<ActivityUpdateWithoutRaceInput, ActivityUncheckedUpdateWithoutRaceInput>
+    create: XOR<ActivityCreateWithoutRaceInput, ActivityUncheckedCreateWithoutRaceInput>
+  }
+
+  export type ActivityUpdateWithWhereUniqueWithoutRaceInput = {
+    where: ActivityWhereUniqueInput
+    data: XOR<ActivityUpdateWithoutRaceInput, ActivityUncheckedUpdateWithoutRaceInput>
+  }
+
+  export type ActivityUpdateManyWithWhereWithoutRaceInput = {
+    where: ActivityScalarWhereInput
+    data: XOR<ActivityUpdateManyMutationInput, ActivityUncheckedUpdateManyWithoutRaceInput>
+  }
+
   export type CheerCreateWithoutUserRaceInput = {
     id?: string
     message: string
@@ -16037,8 +17798,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16046,6 +17809,7 @@ export namespace Prisma {
     participations?: ParticipationCreateNestedManyWithoutRaceInput
     checkpoints?: CheckpointCreateNestedManyWithoutRaceInput
     chatMessages?: ChatMessageCreateNestedManyWithoutRaceInput
+    activities?: ActivityCreateNestedManyWithoutRaceInput
   }
 
   export type RaceUncheckedCreateWithoutUserRacesInput = {
@@ -16053,8 +17817,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     userId: string
     createdAt?: Date | string
@@ -16062,6 +17828,7 @@ export namespace Prisma {
     participations?: ParticipationUncheckedCreateNestedManyWithoutRaceInput
     checkpoints?: CheckpointUncheckedCreateNestedManyWithoutRaceInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutRaceInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutRaceInput
   }
 
   export type RaceCreateOrConnectWithoutUserRacesInput = {
@@ -16090,6 +17857,7 @@ export namespace Prisma {
     races?: RaceCreateNestedManyWithoutUserInput
     participations?: ParticipationCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUserRacesInput = {
@@ -16113,6 +17881,7 @@ export namespace Prisma {
     races?: RaceUncheckedCreateNestedManyWithoutUserInput
     participations?: ParticipationUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUserRacesInput = {
@@ -16168,8 +17937,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16177,6 +17948,7 @@ export namespace Prisma {
     participations?: ParticipationUpdateManyWithoutRaceNestedInput
     checkpoints?: CheckpointUpdateManyWithoutRaceNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUpdateManyWithoutRaceNestedInput
   }
 
   export type RaceUncheckedUpdateWithoutUserRacesInput = {
@@ -16184,8 +17956,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16193,6 +17967,7 @@ export namespace Prisma {
     participations?: ParticipationUncheckedUpdateManyWithoutRaceNestedInput
     checkpoints?: CheckpointUncheckedUpdateManyWithoutRaceNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutRaceNestedInput
   }
 
   export type UserUpsertWithoutUserRacesInput = {
@@ -16227,6 +18002,7 @@ export namespace Prisma {
     races?: RaceUpdateManyWithoutUserNestedInput
     participations?: ParticipationUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserRacesInput = {
@@ -16250,6 +18026,7 @@ export namespace Prisma {
     races?: RaceUncheckedUpdateManyWithoutUserNestedInput
     participations?: ParticipationUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RaceCreateWithoutCheckpointsInput = {
@@ -16257,8 +18034,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16266,6 +18045,7 @@ export namespace Prisma {
     participations?: ParticipationCreateNestedManyWithoutRaceInput
     userRaces?: UserRaceCreateNestedManyWithoutRaceInput
     chatMessages?: ChatMessageCreateNestedManyWithoutRaceInput
+    activities?: ActivityCreateNestedManyWithoutRaceInput
   }
 
   export type RaceUncheckedCreateWithoutCheckpointsInput = {
@@ -16273,8 +18053,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     userId: string
     createdAt?: Date | string
@@ -16282,6 +18064,7 @@ export namespace Prisma {
     participations?: ParticipationUncheckedCreateNestedManyWithoutRaceInput
     userRaces?: UserRaceUncheckedCreateNestedManyWithoutRaceInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutRaceInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutRaceInput
   }
 
   export type RaceCreateOrConnectWithoutCheckpointsInput = {
@@ -16305,8 +18088,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16314,6 +18099,7 @@ export namespace Prisma {
     participations?: ParticipationUpdateManyWithoutRaceNestedInput
     userRaces?: UserRaceUpdateManyWithoutRaceNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUpdateManyWithoutRaceNestedInput
   }
 
   export type RaceUncheckedUpdateWithoutCheckpointsInput = {
@@ -16321,8 +18107,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16330,6 +18118,7 @@ export namespace Prisma {
     participations?: ParticipationUncheckedUpdateManyWithoutRaceNestedInput
     userRaces?: UserRaceUncheckedUpdateManyWithoutRaceNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutRaceNestedInput
   }
 
   export type UserRaceCreateWithoutCheersInput = {
@@ -16388,6 +18177,49 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RaceCreateWithoutActivitiesInput = {
+    id?: string
+    name: string
+    description?: string | null
+    distance: number
+    progress?: number
+    startDate: Date | string
+    endDate: Date | string
+    status?: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutRacesInput
+    participations?: ParticipationCreateNestedManyWithoutRaceInput
+    userRaces?: UserRaceCreateNestedManyWithoutRaceInput
+    checkpoints?: CheckpointCreateNestedManyWithoutRaceInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutRaceInput
+  }
+
+  export type RaceUncheckedCreateWithoutActivitiesInput = {
+    id?: string
+    name: string
+    description?: string | null
+    distance: number
+    progress?: number
+    startDate: Date | string
+    endDate: Date | string
+    status?: string
+    imageUrl?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    participations?: ParticipationUncheckedCreateNestedManyWithoutRaceInput
+    userRaces?: UserRaceUncheckedCreateNestedManyWithoutRaceInput
+    checkpoints?: CheckpointUncheckedCreateNestedManyWithoutRaceInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutRaceInput
+  }
+
+  export type RaceCreateOrConnectWithoutActivitiesInput = {
+    where: RaceWhereUniqueInput
+    create: XOR<RaceCreateWithoutActivitiesInput, RaceUncheckedCreateWithoutActivitiesInput>
+  }
+
   export type UserCreateWithoutActivitiesInput = {
     id?: string
     email: string
@@ -16409,6 +18241,7 @@ export namespace Prisma {
     participations?: ParticipationCreateNestedManyWithoutUserInput
     userRaces?: UserRaceCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivitiesInput = {
@@ -16432,11 +18265,61 @@ export namespace Prisma {
     participations?: ParticipationUncheckedCreateNestedManyWithoutUserInput
     userRaces?: UserRaceUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivitiesInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutActivitiesInput, UserUncheckedCreateWithoutActivitiesInput>
+  }
+
+  export type RaceUpsertWithoutActivitiesInput = {
+    update: XOR<RaceUpdateWithoutActivitiesInput, RaceUncheckedUpdateWithoutActivitiesInput>
+    create: XOR<RaceCreateWithoutActivitiesInput, RaceUncheckedCreateWithoutActivitiesInput>
+    where?: RaceWhereInput
+  }
+
+  export type RaceUpdateToOneWithWhereWithoutActivitiesInput = {
+    where?: RaceWhereInput
+    data: XOR<RaceUpdateWithoutActivitiesInput, RaceUncheckedUpdateWithoutActivitiesInput>
+  }
+
+  export type RaceUpdateWithoutActivitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutRacesNestedInput
+    participations?: ParticipationUpdateManyWithoutRaceNestedInput
+    userRaces?: UserRaceUpdateManyWithoutRaceNestedInput
+    checkpoints?: CheckpointUpdateManyWithoutRaceNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutRaceNestedInput
+  }
+
+  export type RaceUncheckedUpdateWithoutActivitiesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    participations?: ParticipationUncheckedUpdateManyWithoutRaceNestedInput
+    userRaces?: UserRaceUncheckedUpdateManyWithoutRaceNestedInput
+    checkpoints?: CheckpointUncheckedUpdateManyWithoutRaceNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutRaceNestedInput
   }
 
   export type UserUpsertWithoutActivitiesInput = {
@@ -16471,6 +18354,7 @@ export namespace Prisma {
     participations?: ParticipationUpdateManyWithoutUserNestedInput
     userRaces?: UserRaceUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivitiesInput = {
@@ -16490,6 +18374,119 @@ export namespace Prisma {
     stravaTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    races?: RaceUncheckedUpdateManyWithoutUserNestedInput
+    participations?: ParticipationUncheckedUpdateManyWithoutUserNestedInput
+    userRaces?: UserRaceUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutActivitySyncsInput = {
+    id?: string
+    email: string
+    password?: string | null
+    firstName: string
+    lastName: string
+    profileImage?: string | null
+    bio?: string | null
+    emailVerified?: boolean
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
+    stravaId?: string | null
+    stravaAccessToken?: string | null
+    stravaRefreshToken?: string | null
+    stravaTokenExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    activities?: ActivityCreateNestedManyWithoutUserInput
+    races?: RaceCreateNestedManyWithoutUserInput
+    participations?: ParticipationCreateNestedManyWithoutUserInput
+    userRaces?: UserRaceCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutActivitySyncsInput = {
+    id?: string
+    email: string
+    password?: string | null
+    firstName: string
+    lastName: string
+    profileImage?: string | null
+    bio?: string | null
+    emailVerified?: boolean
+    verificationToken?: string | null
+    verificationTokenExpiry?: Date | string | null
+    stravaId?: string | null
+    stravaAccessToken?: string | null
+    stravaRefreshToken?: string | null
+    stravaTokenExpiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    activities?: ActivityUncheckedCreateNestedManyWithoutUserInput
+    races?: RaceUncheckedCreateNestedManyWithoutUserInput
+    participations?: ParticipationUncheckedCreateNestedManyWithoutUserInput
+    userRaces?: UserRaceUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutActivitySyncsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutActivitySyncsInput, UserUncheckedCreateWithoutActivitySyncsInput>
+  }
+
+  export type UserUpsertWithoutActivitySyncsInput = {
+    update: XOR<UserUpdateWithoutActivitySyncsInput, UserUncheckedUpdateWithoutActivitySyncsInput>
+    create: XOR<UserCreateWithoutActivitySyncsInput, UserUncheckedCreateWithoutActivitySyncsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutActivitySyncsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutActivitySyncsInput, UserUncheckedUpdateWithoutActivitySyncsInput>
+  }
+
+  export type UserUpdateWithoutActivitySyncsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stravaId?: NullableStringFieldUpdateOperationsInput | string | null
+    stravaAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    stravaRefreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    stravaTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activities?: ActivityUpdateManyWithoutUserNestedInput
+    races?: RaceUpdateManyWithoutUserNestedInput
+    participations?: ParticipationUpdateManyWithoutUserNestedInput
+    userRaces?: UserRaceUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutActivitySyncsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    verificationToken?: NullableStringFieldUpdateOperationsInput | string | null
+    verificationTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stravaId?: NullableStringFieldUpdateOperationsInput | string | null
+    stravaAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    stravaRefreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    stravaTokenExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activities?: ActivityUncheckedUpdateManyWithoutUserNestedInput
     races?: RaceUncheckedUpdateManyWithoutUserNestedInput
     participations?: ParticipationUncheckedUpdateManyWithoutUserNestedInput
     userRaces?: UserRaceUncheckedUpdateManyWithoutUserNestedInput
@@ -16517,6 +18514,7 @@ export namespace Prisma {
     races?: RaceCreateNestedManyWithoutUserInput
     userRaces?: UserRaceCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutParticipationsInput = {
@@ -16540,6 +18538,7 @@ export namespace Prisma {
     races?: RaceUncheckedCreateNestedManyWithoutUserInput
     userRaces?: UserRaceUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutParticipationsInput = {
@@ -16552,8 +18551,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16561,6 +18562,7 @@ export namespace Prisma {
     userRaces?: UserRaceCreateNestedManyWithoutRaceInput
     checkpoints?: CheckpointCreateNestedManyWithoutRaceInput
     chatMessages?: ChatMessageCreateNestedManyWithoutRaceInput
+    activities?: ActivityCreateNestedManyWithoutRaceInput
   }
 
   export type RaceUncheckedCreateWithoutParticipationsInput = {
@@ -16568,8 +18570,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     userId: string
     createdAt?: Date | string
@@ -16577,6 +18581,7 @@ export namespace Prisma {
     userRaces?: UserRaceUncheckedCreateNestedManyWithoutRaceInput
     checkpoints?: CheckpointUncheckedCreateNestedManyWithoutRaceInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutRaceInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutRaceInput
   }
 
   export type RaceCreateOrConnectWithoutParticipationsInput = {
@@ -16616,6 +18621,7 @@ export namespace Prisma {
     races?: RaceUpdateManyWithoutUserNestedInput
     userRaces?: UserRaceUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutParticipationsInput = {
@@ -16639,6 +18645,7 @@ export namespace Prisma {
     races?: RaceUncheckedUpdateManyWithoutUserNestedInput
     userRaces?: UserRaceUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RaceUpsertWithoutParticipationsInput = {
@@ -16657,8 +18664,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16666,6 +18675,7 @@ export namespace Prisma {
     userRaces?: UserRaceUpdateManyWithoutRaceNestedInput
     checkpoints?: CheckpointUpdateManyWithoutRaceNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUpdateManyWithoutRaceNestedInput
   }
 
   export type RaceUncheckedUpdateWithoutParticipationsInput = {
@@ -16673,8 +18683,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16682,6 +18694,7 @@ export namespace Prisma {
     userRaces?: UserRaceUncheckedUpdateManyWithoutRaceNestedInput
     checkpoints?: CheckpointUncheckedUpdateManyWithoutRaceNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutRaceNestedInput
   }
 
   export type RaceCreateWithoutChatMessagesInput = {
@@ -16689,8 +18702,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16698,6 +18713,7 @@ export namespace Prisma {
     participations?: ParticipationCreateNestedManyWithoutRaceInput
     userRaces?: UserRaceCreateNestedManyWithoutRaceInput
     checkpoints?: CheckpointCreateNestedManyWithoutRaceInput
+    activities?: ActivityCreateNestedManyWithoutRaceInput
   }
 
   export type RaceUncheckedCreateWithoutChatMessagesInput = {
@@ -16705,8 +18721,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     userId: string
     createdAt?: Date | string
@@ -16714,6 +18732,7 @@ export namespace Prisma {
     participations?: ParticipationUncheckedCreateNestedManyWithoutRaceInput
     userRaces?: UserRaceUncheckedCreateNestedManyWithoutRaceInput
     checkpoints?: CheckpointUncheckedCreateNestedManyWithoutRaceInput
+    activities?: ActivityUncheckedCreateNestedManyWithoutRaceInput
   }
 
   export type RaceCreateOrConnectWithoutChatMessagesInput = {
@@ -16742,6 +18761,7 @@ export namespace Prisma {
     races?: RaceCreateNestedManyWithoutUserInput
     participations?: ParticipationCreateNestedManyWithoutUserInput
     userRaces?: UserRaceCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatMessagesInput = {
@@ -16765,6 +18785,7 @@ export namespace Prisma {
     races?: RaceUncheckedCreateNestedManyWithoutUserInput
     participations?: ParticipationUncheckedCreateNestedManyWithoutUserInput
     userRaces?: UserRaceUncheckedCreateNestedManyWithoutUserInput
+    activitySyncs?: ActivitySyncUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatMessagesInput = {
@@ -16788,8 +18809,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16797,6 +18820,7 @@ export namespace Prisma {
     participations?: ParticipationUpdateManyWithoutRaceNestedInput
     userRaces?: UserRaceUpdateManyWithoutRaceNestedInput
     checkpoints?: CheckpointUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUpdateManyWithoutRaceNestedInput
   }
 
   export type RaceUncheckedUpdateWithoutChatMessagesInput = {
@@ -16804,8 +18828,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16813,6 +18839,7 @@ export namespace Prisma {
     participations?: ParticipationUncheckedUpdateManyWithoutRaceNestedInput
     userRaces?: UserRaceUncheckedUpdateManyWithoutRaceNestedInput
     checkpoints?: CheckpointUncheckedUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutRaceNestedInput
   }
 
   export type UserUpsertWithoutChatMessagesInput = {
@@ -16847,6 +18874,7 @@ export namespace Prisma {
     races?: RaceUpdateManyWithoutUserNestedInput
     participations?: ParticipationUpdateManyWithoutUserNestedInput
     userRaces?: UserRaceUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMessagesInput = {
@@ -16870,6 +18898,7 @@ export namespace Prisma {
     races?: RaceUncheckedUpdateManyWithoutUserNestedInput
     participations?: ParticipationUncheckedUpdateManyWithoutUserNestedInput
     userRaces?: UserRaceUncheckedUpdateManyWithoutUserNestedInput
+    activitySyncs?: ActivitySyncUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ActivityCreateManyUserInput = {
@@ -16877,10 +18906,9 @@ export namespace Prisma {
     stravaId: string
     name: string
     distance: number
-    movingTime: number
-    elapsedTime: number
-    startDate: Date | string
+    date: Date | string
     type: string
+    raceId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16890,8 +18918,10 @@ export namespace Prisma {
     name: string
     description?: string | null
     distance: number
+    progress?: number
     startDate: Date | string
     endDate: Date | string
+    status?: string
     imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16920,8 +18950,15 @@ export namespace Prisma {
     userName: string
     userAvatar?: string | null
     content: string
-    type?: string
+    type?: $Enums.ChatMessageType
     timestamp?: Date | string
+  }
+
+  export type ActivitySyncCreateManyUserInput = {
+    id?: string
+    syncedAt: Date | string
+    activitiesCount: number
+    createdAt?: Date | string
   }
 
   export type ActivityUpdateWithoutUserInput = {
@@ -16929,12 +18966,11 @@ export namespace Prisma {
     stravaId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     distance?: FloatFieldUpdateOperationsInput | number
-    movingTime?: IntFieldUpdateOperationsInput | number
-    elapsedTime?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    race?: RaceUpdateOneRequiredWithoutActivitiesNestedInput
   }
 
   export type ActivityUncheckedUpdateWithoutUserInput = {
@@ -16942,10 +18978,9 @@ export namespace Prisma {
     stravaId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     distance?: FloatFieldUpdateOperationsInput | number
-    movingTime?: IntFieldUpdateOperationsInput | number
-    elapsedTime?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: StringFieldUpdateOperationsInput | string
+    raceId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16955,10 +18990,9 @@ export namespace Prisma {
     stravaId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     distance?: FloatFieldUpdateOperationsInput | number
-    movingTime?: IntFieldUpdateOperationsInput | number
-    elapsedTime?: IntFieldUpdateOperationsInput | number
-    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: StringFieldUpdateOperationsInput | string
+    raceId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -16968,8 +19002,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16977,6 +19013,7 @@ export namespace Prisma {
     userRaces?: UserRaceUpdateManyWithoutRaceNestedInput
     checkpoints?: CheckpointUpdateManyWithoutRaceNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUpdateManyWithoutRaceNestedInput
   }
 
   export type RaceUncheckedUpdateWithoutUserInput = {
@@ -16984,8 +19021,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16993,6 +19032,7 @@ export namespace Prisma {
     userRaces?: UserRaceUncheckedUpdateManyWithoutRaceNestedInput
     checkpoints?: CheckpointUncheckedUpdateManyWithoutRaceNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutRaceNestedInput
+    activities?: ActivityUncheckedUpdateManyWithoutRaceNestedInput
   }
 
   export type RaceUncheckedUpdateManyWithoutUserInput = {
@@ -17000,8 +19040,10 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     distance?: FloatFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17065,7 +19107,7 @@ export namespace Prisma {
     userName?: StringFieldUpdateOperationsInput | string
     userAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumChatMessageTypeFieldUpdateOperationsInput | $Enums.ChatMessageType
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     race?: RaceUpdateOneRequiredWithoutChatMessagesNestedInput
   }
@@ -17076,7 +19118,7 @@ export namespace Prisma {
     userName?: StringFieldUpdateOperationsInput | string
     userAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumChatMessageTypeFieldUpdateOperationsInput | $Enums.ChatMessageType
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -17086,8 +19128,29 @@ export namespace Prisma {
     userName?: StringFieldUpdateOperationsInput | string
     userAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumChatMessageTypeFieldUpdateOperationsInput | $Enums.ChatMessageType
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivitySyncUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activitiesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivitySyncUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activitiesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivitySyncUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    activitiesCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ParticipationCreateManyRaceInput = {
@@ -17123,8 +19186,20 @@ export namespace Prisma {
     userName: string
     userAvatar?: string | null
     content: string
-    type?: string
+    type?: $Enums.ChatMessageType
     timestamp?: Date | string
+  }
+
+  export type ActivityCreateManyRaceInput = {
+    id?: string
+    stravaId: string
+    name: string
+    distance: number
+    date: Date | string
+    type: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ParticipationUpdateWithoutRaceInput = {
@@ -17215,7 +19290,7 @@ export namespace Prisma {
     userName?: StringFieldUpdateOperationsInput | string
     userAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumChatMessageTypeFieldUpdateOperationsInput | $Enums.ChatMessageType
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutChatMessagesNestedInput
   }
@@ -17226,7 +19301,7 @@ export namespace Prisma {
     userName?: StringFieldUpdateOperationsInput | string
     userAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumChatMessageTypeFieldUpdateOperationsInput | $Enums.ChatMessageType
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -17236,8 +19311,44 @@ export namespace Prisma {
     userName?: StringFieldUpdateOperationsInput | string
     userAvatar?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
+    type?: EnumChatMessageTypeFieldUpdateOperationsInput | $Enums.ChatMessageType
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityUpdateWithoutRaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    stravaId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    distance?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutActivitiesNestedInput
+  }
+
+  export type ActivityUncheckedUpdateWithoutRaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    stravaId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    distance?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ActivityUncheckedUpdateManyWithoutRaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    stravaId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    distance?: FloatFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CheerCreateManyUserRaceInput = {

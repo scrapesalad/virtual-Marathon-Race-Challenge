@@ -115,7 +115,40 @@ export const chicagoMarathon = {
     [41.8781, -87.6298], // West Side
     [41.8781, -87.6298], // South Side
     [41.8781, -87.6298]  // Finish
-  ] as [number, number][]
+  ] as [number, number][],
+  milestones: [
+    {
+      distance: 0,
+      location: 'Grant Park',
+      description: 'Start in the heart of Chicago',
+    },
+    {
+      distance: 10,
+      location: 'Lincoln Park',
+      description: 'Run through Chicago\'s largest public park',
+    },
+    {
+      distance: 20,
+      location: 'West Loop',
+      description: 'Experience the vibrant restaurant district',
+    },
+    {
+      distance: 30,
+      location: 'Pilsen',
+      description: 'Enjoy the lively Latino neighborhood',
+    },
+    {
+      distance: 35,
+      location: 'Chinatown',
+      description: 'Pass through the historic Chinese district',
+    },
+    {
+      distance: 42.2,
+      location: 'Grant Park',
+      description: 'Finish back in beautiful Grant Park',
+    },
+  ],
+  image: '/images/races/chicago-marathon.jpg'
 };
 
 export const londonMarathon = {
@@ -133,7 +166,40 @@ export const londonMarathon = {
     [51.5074, -0.1278], // Embankment
     [51.5074, -0.1278], // Buckingham Palace
     [51.5074, -0.1278]  // The Mall
-  ] as [number, number][]
+  ] as [number, number][],
+  milestones: [
+    {
+      distance: 0,
+      location: 'Greenwich',
+      description: 'Start at historic Greenwich Park',
+    },
+    {
+      distance: 10,
+      location: 'Tower Bridge',
+      description: 'Cross the iconic Tower Bridge',
+    },
+    {
+      distance: 20,
+      location: 'Canary Wharf',
+      description: 'Run through London\'s financial district',
+    },
+    {
+      distance: 30,
+      location: 'Embankment',
+      description: 'Follow the Thames along Victoria Embankment',
+    },
+    {
+      distance: 35,
+      location: 'Westminster',
+      description: 'Pass Big Ben and the Houses of Parliament',
+    },
+    {
+      distance: 42.2,
+      location: 'The Mall',
+      description: 'Finish in front of Buckingham Palace',
+    },
+  ],
+  image: '/images/races/london-marathon.jpg'
 };
 
 export const berlinMarathon = {

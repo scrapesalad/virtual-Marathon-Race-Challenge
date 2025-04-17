@@ -1,18 +1,18 @@
 import { NextResponse } from 'next/server';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import { prisma } from '@/lib/prisma';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import nodemailer from 'nodemailer';
 import { sendVerificationEmail } from '@/lib/email';
 
 // Email validation regex
-const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
   try {
-    const { name, email, password } = await request.json();
+    const { firstName, lastName, email, password } = await request.json();
 
-    console.log('Registration attempt:', { name, email: email.slice(0, 3) + '...' });
+    console.log('Registration attempt:', { firstName, lastName, email: email.slice(0, 3) + '...' });
 
     // Test database connection first
     try {
@@ -26,10 +26,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // Input validation
-    if (!name || !email || !password) {
+    // Validate required fields
+    if (!firstName || !lastName || !email || !password) {
       return NextResponse.json(
-        { error: 'Name, email, and password are required' },
+        { error: 'Missing required fields' },
         { status: 400 }
       );
     }
@@ -73,12 +73,16 @@ export async function POST(request: Request) {
     console.log('Creating new user with email:', email.slice(0, 3) + '...');
     const user = await prisma.user.create({
       data: {
-        name,
+        firstName,
+        lastName,
         email,
         password: hashedPassword,
-        emailVerified: null,
+        emailVerified: false,
       },
     });
+
+    // Remove password from response
+    const { password: _, ...userWithoutPassword } = user;
 
     // Send verification email
     const emailSent = await sendVerificationEmail(email);
@@ -88,24 +92,17 @@ export async function POST(request: Request) {
     }
 
     console.log('User created successfully:', user.id);
-    return NextResponse.json(
-      { 
-        message: 'User created successfully. Please check your email to verify your account.',
-        user: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-        }
-      },
-      { status: 201 }
-    );
+    return NextResponse.json({
+      message: 'User created successfully',
+      user: userWithoutPassword
+    });
   } catch (error) {
     console.error('Registration error:', error);
     if (error instanceof PrismaClientKnownRequestError) {
       console.error('Database error details:', error);
     }
     return NextResponse.json(
-      { error: 'Registration failed' },
+      { error: 'Error creating user' },
       { status: 500 }
     );
   } finally {

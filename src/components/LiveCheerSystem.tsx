@@ -221,7 +221,7 @@ export function LiveCheerSystem({
             ) : (
               <>
                 <Button 
-                  variant="destructive" 
+                  variant="secondary"
                   onClick={stopRecording}
                   className="flex-1"
                 >
@@ -246,7 +246,7 @@ export function LiveCheerSystem({
               <div className="flex justify-between items-start">
                 <div>
                   <span className="font-medium">{cheer.sender}</span>
-                  <Badge variant="outline" className="ml-2">
+                  <Badge variant="default" className="ml-2">
                     {cheer.type === 'audio' ? '🎤 Audio' : '💬 Text'}
                   </Badge>
                 </div>
