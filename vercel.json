@@ -1,19 +1,18 @@
 {
   "version": 2,
-  "buildCommand": "prisma generate && next build",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["iad1"],
   "env": {
-    "NEXTAUTH_URL": "WILL_BE_SET_BY_VERCEL",
-    "PRISMA_GENERATE_DATAPROXY": "true"
+    "NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN": "@next_public_mapbox_access_token",
+    "DATABASE_URL": "@database_url",
+    "NEXTAUTH_URL": "@nextauth_url",
+    "NEXTAUTH_SECRET": "@nextauth_secret",
+    "STRAVA_CLIENT_ID": "@strava_client_id",
+    "STRAVA_CLIENT_SECRET": "@strava_client_secret"
   },
-  "rewrites": [
-    {
-      "source": "/races/:id",
-      "destination": "/races/[id]"
-    }
-  ],
   "redirects": [
     {
       "source": "/",

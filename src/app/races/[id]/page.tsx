@@ -1,6 +1,6 @@
-import { notFound } from 'next/navigation';
+import { marathonRoutes } from '@/data/marathon-routes';
 import { RaceDetails } from '@/components/races/RaceDetails';
-import { getMarathonRouteById } from '@/data/marathon-routes';
+import { notFound } from 'next/navigation';
 
 interface RacePageProps {
   params: {
@@ -8,24 +8,36 @@ interface RacePageProps {
   };
 }
 
-export default async function RacePage({ params }: RacePageProps) {
-  // Ensure params.id is properly awaited
-  const id = await Promise.resolve(params.id);
-  const race = getMarathonRouteById(id);
+export function generateStaticParams() {
+  return marathonRoutes.map((route) => ({
+    id: route.id,
+  }));
+}
 
-  if (!race) {
+export default function RacePage({ params }: RacePageProps) {
+  const route = marathonRoutes.find((r) => r.id === params.id);
+  
+  if (!route) {
     notFound();
   }
 
-  // Convert the marathon route data to match the RaceDetails component props
   const raceData = {
-    ...race,
-    startDate: new Date().toISOString(), // You should replace this with actual race dates
-    endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
+    id: route.id,
+    name: route.name,
+    description: route.description,
+    location: route.location,
+    distance: route.distance,
+    elevationGain: route.elevationGain,
+    difficulty: route.difficulty,
+    startDate: route.startDate || new Date().toISOString(),
+    endDate: route.endDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    courseRecord: route.courseRecord,
+    recordHolder: route.recordHolder,
+    recordYear: route.recordYear,
     route: {
-      coordinates: race.coordinates
+      coordinates: route.coordinates,
     },
-    participants: [] // You should fetch actual participants from your database
+    participants: [] // We'll fetch participants from the database in a future update
   };
 
   return <RaceDetails race={raceData} />;
