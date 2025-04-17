@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+.yarn/install-state.gz
 
 # testing
 /coverage
@@ -35,7 +36,14 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# IDE
+.idea/
+.vscode/
+
 # Prisma
-generated/prisma/
-*.db
-prisma/dev.db
+/prisma/migrations/
+/prisma/dev.db
+/prisma/dev.db-journal
+
+# OS
+Thumbs.db
